@@ -68,6 +68,40 @@ class BNReLUConvModule(BaseModule):
         conv = BaseModule('Convolution', self.convParams).attach(netspec, [relu])
         return conv
 
+class BNReLUCorrModule(BaseModule):
+    type='BNReLUCorr'
+    def __init__(self, name_template, bn_params, corr_params, sync_bn=False, uni_bn=True, scale_params=None):
+        self.uni_bn = uni_bn
+        self.sync_bn = sync_bn
+        # scale_params cannot be None when using BatchNorm
+        if not uni_bn and scale_params is None:
+            scale_params = dict()
+        if uni_bn:
+            self.bnParams = bn_params.copy()
+            self.bnParams.update(name='bn_' + name_template)
+        else:
+            self.batchNormParams = bn_params.copy()
+            self.batchNormParams.update(name='batchnorm_' + name_template)
+            self.scaleParams = scale_params.copy()
+            self.scaleParams.update(name='scale_' + name_template)
+        self.reluParams = dict(name=name_template + '_relu')
+        self.corrParams = corr_params.copy()
+        self.corrParams.update(name='corr' + name_template)
+
+    def attach(self, netspec, bottom):
+        if self.uni_bn:
+            if self.sync_bn:
+                bn = BaseModule('SyncBN', self.bnParams).attach(netspec, bottom)
+            else:
+                bn = BaseModule('BN', self.bnParams).attach(netspec, bottom)
+            relu = BaseModule('ReLU', self.reluParams).attach(netspec, [bn])
+        else:
+            batch_norm = BaseModule('BatchNorm', self.batchNormParams).attach(netspec, bottom)
+            scale = BaseModule('Scale', self.scaleParams).attach(netspec, [batch_norm])
+            relu = BaseModule('ReLU', self.reluParams).attach(netspec, [scale])
+        corr = BaseModule('Corrv1', self.corrParams).attach(netspec, [relu])
+        return corr
+
 class TemporalConvModule(BaseModule):
     type='TemporalConv'
     def __init__(self, name_template, bn_params, stride, num_output, sync_bn=False, uni_bn=True, scale_params=None):

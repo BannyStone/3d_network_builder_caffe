@@ -276,15 +276,22 @@ class PreActWiderTempConvBlock(BaseModule):
         return out
 
 class CorrAttentionBlock(BaseModule):
-    type='PreActWiderDecoup'
-    def __init__(self, name_template, shortcut, num_output, stride, \
-                main_branch='normal', sync_bn=False, wider=True, uni_bn=True):
+    type='CorrAttention'
+    def __init__(self, name_template, template_type, 
+                num_output, kernel_size, \
+                max_displacement, pad, \
+                stride_1=1, stride_2=1, template_index=0, \
+                sync_bn=False, uni_bn=True):
         self.uni_bn = uni_bn
-        self.wider = wider
         self.name_template = name_template
-        self.shortcut = shortcut
-        self.stride = stride
-        self.main_branch = main_branch
+        self.template_type = template_type
+        self.template_index = template_index
+        self.pad = pad
+        self.num_output = num_output
+        self.kernel_size = kernel_size
+        self.max_displacement = max_displacement
+        self.stride_1 = stride_1
+        self.stride_2 = stride_2
         self.num_output = num_output
         self.sync_bn = sync_bn
 
@@ -294,25 +301,43 @@ class CorrAttentionBlock(BaseModule):
         else:
             self.bn_params = dict(use_global_stats=False)
 
-        # set kernel_size & pad
-        self.kernel1_size = [1, 3, 3]
-        self.pad1 = [0, 1, 1]
-        self.kernel2_size = [3, 1, 1]
-        self.pad2 = [1, 0, 0]
-        self.channels1 = num_output
-        if wider:
-            self.channels2 = 27*self.num_output*self.num_output/(9*self.num_output+3*self.num_output)
-        else:
-            self.channels2 = num_output
-        if stride == 2:
-            self.stride1_3D = [1, 2, 2]
-            self.stride2_3D = [2, 1, 1]
-            if wider:
-                self.channels1 = 27*(self.num_output/2)*self.num_output/(9*self.num_output/2+3*self.num_output)
-        elif self.stride == 1:
-            self.stride1_3D = [1, 1, 1]
-            self.stride2_3D = [1, 1, 1]
-            if wider:
-                self.channels1 = 27*self.num_output*self.num_output/(9*self.num_output+3*self.num_output)
-        else:
-            raise ValueError('Unexpected stride value: {}'.format(self.stride))
+    def attach(self, netspec, bottom):
+
+        ########### Shortcut #############
+        shortcut = bottom[0]
+
+        ########### BNReLUCorr ############
+        name = self.name_template
+        corr_params = dict(name='corr_' + name,
+                            kernel_size=self.kernel_size,
+                            max_displacement=self.max_displacement,
+                            template_type=self.template_type,
+                            template_index=self.template_index,
+                            pad=self.pad,
+                            stride_1=self.stride_1,
+                            stride_2=self.stride_2
+                            )
+        corr = BNReLUCorrModule(name_template=self.name_template,
+                                bn_params=self.bn_params,
+                                corr_params=corr_params).attach(netspec, bottom)
+
+        ########### Convolution + Sigmoid ###########
+        conv_params = dict(name='conv_' + name,
+                            num_output=self.num_output,
+                            kernel_size=[3, 3, 3],
+                            pad=[1, 1, 1],
+                            stride=[1, 1, 1],
+                            engine=2)
+        conv_corr = BaseModule('Convolution', conv_params).attach(netspec, [corr])
+        sigmoid_params = dict(name='sigmoid_' + name)
+        gated_conv_corr = BaseModule('Sigmoid', sigmoid_params).attach(netspec, [conv_corr])
+
+        ########### multiply and add eltwise ############
+        mul_params = dict(name='mul_' + name,
+                            operation=0)
+        attention = BaseModule('Eltwise', mul_params).attach(netspec, [shortcut, gated_conv_corr])
+        add_params = dict(name='add_' + name,
+                            operation=1)
+        output = BaseModule('Eltwise', add_params).attach(netspec, [shortcut, attention])
+
+        return output
