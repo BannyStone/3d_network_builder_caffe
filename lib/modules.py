@@ -165,3 +165,249 @@ class TemporalConvModule(BaseModule):
         bias = BaseModule('Bias', self.biasParams).attach(netspec, [shortcut, reshape])
 
         return bias
+
+class PyramidTemporalConvModule(BaseModule):
+    type='PyramidTemporalConv' # start from here
+    def __init__(self, name_template, bn_params, stride, num_output, sync_bn=False, uni_bn=True):
+        self.uni_bn = uni_bn
+        self.sync_bn = sync_bn
+        self.stride = stride
+        self.name_template = name_template
+        self.num_output = num_output
+        self.bn_params = bn_params
+
+    def attach(self, netspec, bottom, res=None):
+        #### BNReLU + tx1x1 convA ####
+        name = self.name_template
+        prenorm = BNReLUModule(name_template=name, \
+                                    bn_params=self.bn_params, \
+                                    sync_bn=self.sync_bn, \
+                                    uni_bn=self.uni_bn).attach(netspec, bottom)
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[self.stride,1,1], \
+                                engine=2)
+        br2a_tx1x1 = BaseModule('Convolution', convtx1x1_params).attach(netspec, [prenorm])
+
+        #### pyramid_1 ####
+        name = self.name_template + '_p1'
+        pool_params = dict(name='pool_' + name,
+                            kernel_size=[1, 3, 3],
+                            pad = [0, 1, 1],
+                            stride=[1, 2, 2],
+                            pool=0)
+        pool1 = BaseModule('Pooling', pool_params).attach(netspec, [br2a_tx1x1])
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[1,1,1], \
+                                engine=2)
+        br2a_tx1x1_p1 = BaseModule('Convolution', convtx1x1_params).attach(netspec, [pool1])
+        interp_params = dict(name='interp_' + name)
+        interp_p1 = BaseModule('Interp', interp_params).attach(netspec, [br2a_tx1x1_p1, br2a_tx1x1])
+
+        #### pyramid_2 ####
+        name = self.name_template + '_p2'
+        pool_params = dict(name='pool_' + name,
+                            kernel_size=[1,3,3],
+                            pad=[0,1,1],
+                            stride=[1,2,2],
+                            pool=0)
+        pool2 = BaseModule('Pooling', pool_params).attach(netspec, [br2a_tx1x1_p1])
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[1,1,1], \
+                                engine=2)
+        br2a_tx1x1_p2 = BaseModule('Convolution', convtx1x1_params).attach(netspec, [pool2])
+        interp_params = dict(name='interp_' + name)
+        interp_p2 = BaseModule('Interp', interp_params).attach(netspec, [br2a_tx1x1_p2, br2a_tx1x1])
+
+        #### pyramid_extreme ####
+        ## Not Added Yet
+
+        #### add ####
+        if res is None:
+            name = self.name_template + '_add'
+            eltwise_params = dict(name=name, operation=1, coeff=[1, 0.5, 0.5]) # [1, 1, 1]
+            out = BaseModule('Eltwise', eltwise_params).attach(netspec, [br2a_tx1x1, interp_p1, interp_p2])
+        else:
+            name = 'eltadd_' + res[0]
+            eltwise_params = dict(name=name, operation=1, coeff=[1, 1, 0.5, 0.5])
+            out = BaseModule('Eltwise', eltwise_params).attach(netspec, [res[1], br2a_tx1x1, interp_p1, interp_p2])
+
+        return out
+
+class PyramidTemporalConvv2Module(BaseModule):
+    type='PyramidTemporalConvv2'
+    def __init__(self, name_template, bn_params, stride, num_output, sync_bn=False, uni_bn=True):
+        self.uni_bn = uni_bn
+        self.sync_bn = sync_bn
+        self.stride = stride
+        self.name_template = name_template
+        self.num_output = num_output
+        self.bn_params = bn_params
+
+    def attach(self, netspec, bottom):
+        #### BNReLU + tx1x1 convA ####
+        name = self.name_template
+        prenorm = BNReLUModule(name_template=name, \
+                                    bn_params=self.bn_params, \
+                                    sync_bn=self.sync_bn, \
+                                    uni_bn=self.uni_bn).attach(netspec, bottom)
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[self.stride,1,1], \
+                                engine=2)
+        br2a_tx1x1 = BaseModule('Convolution', convtx1x1_params).attach(netspec, [prenorm])
+
+        #### pyramid_1 ####
+        name = self.name_template + '_p1'
+        pool_params = dict(name='pool_' + name,
+                            kernel_size=[1, 2, 2],
+                            pad = [0, 0, 0],
+                            stride=[1, 2, 2],
+                            pool=0)
+        pool1 = BaseModule('Pooling', pool_params).attach(netspec, [br2a_tx1x1])
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output/2, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[1,1,1], \
+                                engine=2)
+        br2a_tx1x1_p1 = BNReLUConvModule(name_template=name,
+                        bn_params=self.bn_params,
+                        conv_params=convtx1x1_params).attach(netspec, [pool1])
+        interp_params = dict(name='interp_' + name)
+        interp_p1 = BaseModule('Interp', interp_params).attach(netspec, [br2a_tx1x1_p1, br2a_tx1x1])
+
+        #### pyramid_2 ####
+        name = self.name_template + '_p2'
+        pool_params = dict(name='pool_' + name,
+                            kernel_size=[1,2,2],
+                            pad=[0,0,0],
+                            stride=[1,2,2],
+                            pool=0)
+        pool2 = BaseModule('Pooling', pool_params).attach(netspec, [br2a_tx1x1_p1])
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output/2, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[1,1,1], \
+                                engine=2)
+        br2a_tx1x1_p2 = BNReLUConvModule(name_template=name,
+                        bn_params=self.bn_params,
+                        conv_params=convtx1x1_params).attach(netspec, [pool2])
+        interp_params = dict(name='interp_' + name)
+        interp_p2 = BaseModule('Interp', interp_params).attach(netspec, [br2a_tx1x1_p2, br2a_tx1x1])
+
+        #### pyramid_extreme ####
+        # Not Implemented
+
+        #### concat ####
+        name = self.name_template + '_concat'
+        concat_params = dict(name=name) # [1, 1, 1]
+        concat = BaseModule('Concat', concat_params).attach(netspec, [br2a_tx1x1, interp_p1, interp_p2])
+
+        #### fusion conv ####
+        name = self.name_template + '_fusion'
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[1,1,1], \
+                                engine=2)
+        out = BNReLUConvModule(name_template=name,
+                        bn_params=self.bn_params,
+                        conv_params=convtx1x1_params).attach(netspec, [concat])
+        
+        return br2a_tx1x1, out
+
+class PyramidTemporalConvv3Module(BaseModule):
+    type='PyramidTemporalConvv3'
+    def __init__(self, name_template, bn_params, stride, num_output, sync_bn=False, uni_bn=True):
+        self.uni_bn = uni_bn
+        self.sync_bn = sync_bn
+        self.stride = stride
+        self.name_template = name_template
+        self.num_output = num_output
+        self.bn_params = bn_params
+
+    def attach(self, netspec, bottom):
+        #### BNReLU + tx1x1 convA ####
+        name = self.name_template
+        prenorm = BNReLUModule(name_template=name, \
+                                    bn_params=self.bn_params, \
+                                    sync_bn=self.sync_bn, \
+                                    uni_bn=self.uni_bn).attach(netspec, bottom)
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[self.stride,1,1], \
+                                engine=2)
+        br2a_tx1x1 = BaseModule('Convolution', convtx1x1_params).attach(netspec, [prenorm])
+
+        #### pyramid_1 ####
+        name = self.name_template + '_p1'
+        pool_params = dict(name='pool_' + name,
+                            kernel_size=[1, 3, 3],
+                            pad = [0, 1, 1],
+                            stride=[1, 2, 2],
+                            pool=0)
+        pool1 = BaseModule('Pooling', pool_params).attach(netspec, [prenorm])
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output/2, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[1,1,1], \
+                                engine=2)
+        br2a_tx1x1_p1 = BaseModule('Convolution', convtx1x1_params).attach(netspec, [pool1])
+        interp_params = dict(name='interp_' + name)
+        interp_p1 = BaseModule('Interp', interp_params).attach(netspec, [br2a_tx1x1_p1, br2a_tx1x1])
+
+        #### pyramid_2 ####
+        name = self.name_template + '_p2'
+        pool_params = dict(name='pool_' + name,
+                            kernel_size=[1,3,3],
+                            pad=[0,1,1],
+                            stride=[1,4,4],
+                            pool=0)
+        pool2 = BaseModule('Pooling', pool_params).attach(netspec, [prenorm])
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output/2, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[1,1,1], \
+                                engine=2)
+        br2a_tx1x1_p2 = BaseModule('Convolution', convtx1x1_params).attach(netspec, [pool2])
+        interp_params = dict(name='interp_' + name)
+        interp_p2 = BaseModule('Interp', interp_params).attach(netspec, [br2a_tx1x1_p2, br2a_tx1x1])
+
+        #### pyramid_extreme ####
+        # Not Implemented
+
+        #### concat ####
+        name = self.name_template + '_concat'
+        concat_params = dict(name=name) # [1, 1, 1]
+        concat = BaseModule('Concat', concat_params).attach(netspec, [br2a_tx1x1, interp_p1, interp_p2])
+
+        #### fusion conv ####
+        name = self.name_template + '_fusion'
+        convtx1x1_params = dict(name='conv_' + name, \
+                                num_output=self.num_output, \
+                                kernel_size=[3,1,1], \
+                                pad=[1,0,0], \
+                                stride=[1,1,1], \
+                                engine=2)
+        out = BNReLUConvModule(name_template=name,
+                        bn_params=self.bn_params,
+                        conv_params=convtx1x1_params).attach(netspec, [concat])
+        
+        return br2a_tx1x1, out

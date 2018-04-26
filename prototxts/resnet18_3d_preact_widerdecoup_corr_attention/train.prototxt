@@ -201,7 +201,7 @@ layer {
 }
 layer {
   name: "bn_1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv1_1x3x3"
   top: "bn_1"
   param {
@@ -221,6 +221,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -265,7 +267,7 @@ layer {
 }
 layer {
   name: "bn_2a_branch2a_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv1"
   top: "bn_2a_branch2a_1x3x3"
   param {
@@ -285,6 +287,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -329,7 +333,7 @@ layer {
 }
 layer {
   name: "bn_2a_branch2a_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv2a_branch2a_1x3x3"
   top: "bn_2a_branch2a_3x1x1"
   param {
@@ -349,6 +353,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -393,7 +399,7 @@ layer {
 }
 layer {
   name: "bn_2a_branch2b_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv2a_branch2a_3x1x1"
   top: "bn_2a_branch2b_1x3x3"
   param {
@@ -413,6 +419,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -457,7 +465,7 @@ layer {
 }
 layer {
   name: "bn_2a_branch2b_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv2a_branch2b_1x3x3"
   top: "bn_2a_branch2b_3x1x1"
   param {
@@ -477,6 +485,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -528,7 +538,7 @@ layer {
 }
 layer {
   name: "bn_2b_branch2a_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "eltadd_2a"
   top: "bn_2b_branch2a_1x3x3"
   param {
@@ -548,6 +558,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -592,7 +604,7 @@ layer {
 }
 layer {
   name: "bn_2b_branch2a_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv2b_branch2a_1x3x3"
   top: "bn_2b_branch2a_3x1x1"
   param {
@@ -612,6 +624,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -656,7 +670,7 @@ layer {
 }
 layer {
   name: "bn_2b_branch2b_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv2b_branch2a_3x1x1"
   top: "bn_2b_branch2b_1x3x3"
   param {
@@ -676,6 +690,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -720,7 +736,7 @@ layer {
 }
 layer {
   name: "bn_2b_branch2b_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv2b_branch2b_1x3x3"
   top: "bn_2b_branch2b_3x1x1"
   param {
@@ -740,6 +756,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -791,7 +809,7 @@ layer {
 }
 layer {
   name: "bn_3a"
-  type: "SyncBN"
+  type: "BN"
   bottom: "eltadd_2b"
   top: "bn_3a"
   param {
@@ -811,6 +829,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -855,7 +875,7 @@ layer {
 }
 layer {
   name: "bn_3a_branch1_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv3a_branch1_1x3x3"
   top: "bn_3a_branch1_3x1x1"
   param {
@@ -875,6 +895,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -953,7 +975,7 @@ layer {
 }
 layer {
   name: "bn_3a_branch2a_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv3a_branch2a_1x3x3"
   top: "bn_3a_branch2a_3x1x1"
   param {
@@ -973,6 +995,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1017,7 +1041,7 @@ layer {
 }
 layer {
   name: "bn_3a_branch2b_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv3a_branch2a_3x1x1"
   top: "bn_3a_branch2b_1x3x3"
   param {
@@ -1037,6 +1061,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1081,7 +1107,7 @@ layer {
 }
 layer {
   name: "bn_3a_branch2b_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv3a_branch2b_1x3x3"
   top: "bn_3a_branch2b_3x1x1"
   param {
@@ -1101,6 +1127,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1259,7 +1287,7 @@ layer {
 }
 layer {
   name: "bn_3b_branch2a_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "add_stage3_atten"
   top: "bn_3b_branch2a_1x3x3"
   param {
@@ -1279,6 +1307,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1323,7 +1353,7 @@ layer {
 }
 layer {
   name: "bn_3b_branch2a_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv3b_branch2a_1x3x3"
   top: "bn_3b_branch2a_3x1x1"
   param {
@@ -1343,6 +1373,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1387,7 +1419,7 @@ layer {
 }
 layer {
   name: "bn_3b_branch2b_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv3b_branch2a_3x1x1"
   top: "bn_3b_branch2b_1x3x3"
   param {
@@ -1407,6 +1439,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1451,7 +1485,7 @@ layer {
 }
 layer {
   name: "bn_3b_branch2b_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv3b_branch2b_1x3x3"
   top: "bn_3b_branch2b_3x1x1"
   param {
@@ -1471,6 +1505,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1522,7 +1558,7 @@ layer {
 }
 layer {
   name: "bn_4a"
-  type: "SyncBN"
+  type: "BN"
   bottom: "eltadd_3b"
   top: "bn_4a"
   param {
@@ -1542,6 +1578,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1586,7 +1624,7 @@ layer {
 }
 layer {
   name: "bn_4a_branch1_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv4a_branch1_1x3x3"
   top: "bn_4a_branch1_3x1x1"
   param {
@@ -1606,6 +1644,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1684,7 +1724,7 @@ layer {
 }
 layer {
   name: "bn_4a_branch2a_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv4a_branch2a_1x3x3"
   top: "bn_4a_branch2a_3x1x1"
   param {
@@ -1704,6 +1744,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1748,7 +1790,7 @@ layer {
 }
 layer {
   name: "bn_4a_branch2b_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv4a_branch2a_3x1x1"
   top: "bn_4a_branch2b_1x3x3"
   param {
@@ -1768,6 +1810,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1812,7 +1856,7 @@ layer {
 }
 layer {
   name: "bn_4a_branch2b_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv4a_branch2b_1x3x3"
   top: "bn_4a_branch2b_3x1x1"
   param {
@@ -1832,6 +1876,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1990,7 +2036,7 @@ layer {
 }
 layer {
   name: "bn_4b_branch2a_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "add_stage4_atten"
   top: "bn_4b_branch2a_1x3x3"
   param {
@@ -2010,6 +2056,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2054,7 +2102,7 @@ layer {
 }
 layer {
   name: "bn_4b_branch2a_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv4b_branch2a_1x3x3"
   top: "bn_4b_branch2a_3x1x1"
   param {
@@ -2074,6 +2122,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2118,7 +2168,7 @@ layer {
 }
 layer {
   name: "bn_4b_branch2b_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv4b_branch2a_3x1x1"
   top: "bn_4b_branch2b_1x3x3"
   param {
@@ -2138,6 +2188,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2182,7 +2234,7 @@ layer {
 }
 layer {
   name: "bn_4b_branch2b_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv4b_branch2b_1x3x3"
   top: "bn_4b_branch2b_3x1x1"
   param {
@@ -2202,6 +2254,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2253,7 +2307,7 @@ layer {
 }
 layer {
   name: "bn_5a"
-  type: "SyncBN"
+  type: "BN"
   bottom: "eltadd_4b"
   top: "bn_5a"
   param {
@@ -2273,6 +2327,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2317,7 +2373,7 @@ layer {
 }
 layer {
   name: "bn_5a_branch1_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv5a_branch1_1x3x3"
   top: "bn_5a_branch1_3x1x1"
   param {
@@ -2337,6 +2393,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2415,7 +2473,7 @@ layer {
 }
 layer {
   name: "bn_5a_branch2a_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv5a_branch2a_1x3x3"
   top: "bn_5a_branch2a_3x1x1"
   param {
@@ -2435,6 +2493,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2479,7 +2539,7 @@ layer {
 }
 layer {
   name: "bn_5a_branch2b_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv5a_branch2a_3x1x1"
   top: "bn_5a_branch2b_1x3x3"
   param {
@@ -2499,6 +2559,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2543,7 +2605,7 @@ layer {
 }
 layer {
   name: "bn_5a_branch2b_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv5a_branch2b_1x3x3"
   top: "bn_5a_branch2b_3x1x1"
   param {
@@ -2563,6 +2625,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2721,7 +2785,7 @@ layer {
 }
 layer {
   name: "bn_5b_branch2a_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "add_stage5_atten"
   top: "bn_5b_branch2a_1x3x3"
   param {
@@ -2741,6 +2805,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2785,7 +2851,7 @@ layer {
 }
 layer {
   name: "bn_5b_branch2a_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv5b_branch2a_1x3x3"
   top: "bn_5b_branch2a_3x1x1"
   param {
@@ -2805,6 +2871,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2849,7 +2917,7 @@ layer {
 }
 layer {
   name: "bn_5b_branch2b_1x3x3"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv5b_branch2a_3x1x1"
   top: "bn_5b_branch2b_1x3x3"
   param {
@@ -2869,6 +2937,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2913,7 +2983,7 @@ layer {
 }
 layer {
   name: "bn_5b_branch2b_3x1x1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv5b_branch2b_1x3x3"
   top: "bn_5b_branch2b_3x1x1"
   param {
@@ -2933,6 +3003,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2984,7 +3056,7 @@ layer {
 }
 layer {
   name: "bn_5b"
-  type: "SyncBN"
+  type: "BN"
   bottom: "eltadd_5b"
   top: "bn_5b"
   param {
@@ -3004,6 +3076,8 @@ layer {
       type: "constant"
       value: 0.0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
