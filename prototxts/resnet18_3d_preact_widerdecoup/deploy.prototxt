@@ -18,12 +18,12 @@ layer {
   bottom: "data"
   top: "conv1_1x3x3"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 83
@@ -41,33 +41,35 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
   name: "bn_1"
-  type: "SyncBN"
+  type: "BN"
   bottom: "conv1_1x3x3"
   top: "bn_1"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -82,12 +84,12 @@ layer {
   bottom: "bn_1"
   top: "conv1"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 64
@@ -105,53 +107,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_2a_branch2a_1x3x3"
-  type: "SyncBN"
+  name: "bn_2a_branch2a_s"
+  type: "BN"
   bottom: "conv1"
-  top: "bn_2a_branch2a_1x3x3"
+  top: "bn_2a_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "2a_branch2a_1x3x3_relu"
+  name: "2a_branch2a_s_relu"
   type: "ReLU"
-  bottom: "bn_2a_branch2a_1x3x3"
-  top: "bn_2a_branch2a_1x3x3"
+  bottom: "bn_2a_branch2a_s"
+  top: "bn_2a_branch2a_s"
 }
 layer {
-  name: "conv2a_branch2a_1x3x3"
+  name: "conv2a_branch2a_s"
   type: "Convolution"
-  bottom: "bn_2a_branch2a_1x3x3"
-  top: "conv2a_branch2a_1x3x3"
+  bottom: "bn_2a_branch2a_s"
+  top: "conv2a_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 144
@@ -169,53 +173,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_2a_branch2a_3x1x1"
-  type: "SyncBN"
-  bottom: "conv2a_branch2a_1x3x3"
-  top: "bn_2a_branch2a_3x1x1"
+  name: "bn_2a_branch2a_t"
+  type: "BN"
+  bottom: "conv2a_branch2a_s"
+  top: "bn_2a_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "2a_branch2a_3x1x1_relu"
+  name: "2a_branch2a_t_relu"
   type: "ReLU"
-  bottom: "bn_2a_branch2a_3x1x1"
-  top: "bn_2a_branch2a_3x1x1"
+  bottom: "bn_2a_branch2a_t"
+  top: "bn_2a_branch2a_t"
 }
 layer {
-  name: "conv2a_branch2a_3x1x1"
+  name: "conv2a_branch2a_t"
   type: "Convolution"
-  bottom: "bn_2a_branch2a_3x1x1"
-  top: "conv2a_branch2a_3x1x1"
+  bottom: "bn_2a_branch2a_t"
+  top: "conv2a_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 64
@@ -233,53 +239,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_2a_branch2b_1x3x3"
-  type: "SyncBN"
-  bottom: "conv2a_branch2a_3x1x1"
-  top: "bn_2a_branch2b_1x3x3"
+  name: "bn_2a_branch2b_s"
+  type: "BN"
+  bottom: "conv2a_branch2a_t"
+  top: "bn_2a_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "2a_branch2b_1x3x3_relu"
+  name: "2a_branch2b_s_relu"
   type: "ReLU"
-  bottom: "bn_2a_branch2b_1x3x3"
-  top: "bn_2a_branch2b_1x3x3"
+  bottom: "bn_2a_branch2b_s"
+  top: "bn_2a_branch2b_s"
 }
 layer {
-  name: "conv2a_branch2b_1x3x3"
+  name: "conv2a_branch2b_s"
   type: "Convolution"
-  bottom: "bn_2a_branch2b_1x3x3"
-  top: "conv2a_branch2b_1x3x3"
+  bottom: "bn_2a_branch2b_s"
+  top: "conv2a_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 144
@@ -297,53 +305,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_2a_branch2b_3x1x1"
-  type: "SyncBN"
-  bottom: "conv2a_branch2b_1x3x3"
-  top: "bn_2a_branch2b_3x1x1"
+  name: "bn_2a_branch2b_t"
+  type: "BN"
+  bottom: "conv2a_branch2b_s"
+  top: "bn_2a_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "2a_branch2b_3x1x1_relu"
+  name: "2a_branch2b_t_relu"
   type: "ReLU"
-  bottom: "bn_2a_branch2b_3x1x1"
-  top: "bn_2a_branch2b_3x1x1"
+  bottom: "bn_2a_branch2b_t"
+  top: "bn_2a_branch2b_t"
 }
 layer {
-  name: "conv2a_branch2b_3x1x1"
+  name: "conv2a_branch2b_t"
   type: "Convolution"
-  bottom: "bn_2a_branch2b_3x1x1"
-  top: "conv2a_branch2b_3x1x1"
+  bottom: "bn_2a_branch2b_t"
+  top: "conv2a_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 64
@@ -361,7 +371,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
@@ -370,51 +380,53 @@ layer {
   name: "eltadd_2a"
   type: "Eltwise"
   bottom: "conv1"
-  bottom: "conv2a_branch2b_3x1x1"
+  bottom: "conv2a_branch2b_t"
   top: "eltadd_2a"
 }
 layer {
-  name: "bn_2b_branch2a_1x3x3"
-  type: "SyncBN"
+  name: "bn_2b_branch2a_s"
+  type: "BN"
   bottom: "eltadd_2a"
-  top: "bn_2b_branch2a_1x3x3"
+  top: "bn_2b_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "2b_branch2a_1x3x3_relu"
+  name: "2b_branch2a_s_relu"
   type: "ReLU"
-  bottom: "bn_2b_branch2a_1x3x3"
-  top: "bn_2b_branch2a_1x3x3"
+  bottom: "bn_2b_branch2a_s"
+  top: "bn_2b_branch2a_s"
 }
 layer {
-  name: "conv2b_branch2a_1x3x3"
+  name: "conv2b_branch2a_s"
   type: "Convolution"
-  bottom: "bn_2b_branch2a_1x3x3"
-  top: "conv2b_branch2a_1x3x3"
+  bottom: "bn_2b_branch2a_s"
+  top: "conv2b_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 144
@@ -432,53 +444,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_2b_branch2a_3x1x1"
-  type: "SyncBN"
-  bottom: "conv2b_branch2a_1x3x3"
-  top: "bn_2b_branch2a_3x1x1"
+  name: "bn_2b_branch2a_t"
+  type: "BN"
+  bottom: "conv2b_branch2a_s"
+  top: "bn_2b_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "2b_branch2a_3x1x1_relu"
+  name: "2b_branch2a_t_relu"
   type: "ReLU"
-  bottom: "bn_2b_branch2a_3x1x1"
-  top: "bn_2b_branch2a_3x1x1"
+  bottom: "bn_2b_branch2a_t"
+  top: "bn_2b_branch2a_t"
 }
 layer {
-  name: "conv2b_branch2a_3x1x1"
+  name: "conv2b_branch2a_t"
   type: "Convolution"
-  bottom: "bn_2b_branch2a_3x1x1"
-  top: "conv2b_branch2a_3x1x1"
+  bottom: "bn_2b_branch2a_t"
+  top: "conv2b_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 64
@@ -496,53 +510,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_2b_branch2b_1x3x3"
-  type: "SyncBN"
-  bottom: "conv2b_branch2a_3x1x1"
-  top: "bn_2b_branch2b_1x3x3"
+  name: "bn_2b_branch2b_s"
+  type: "BN"
+  bottom: "conv2b_branch2a_t"
+  top: "bn_2b_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "2b_branch2b_1x3x3_relu"
+  name: "2b_branch2b_s_relu"
   type: "ReLU"
-  bottom: "bn_2b_branch2b_1x3x3"
-  top: "bn_2b_branch2b_1x3x3"
+  bottom: "bn_2b_branch2b_s"
+  top: "bn_2b_branch2b_s"
 }
 layer {
-  name: "conv2b_branch2b_1x3x3"
+  name: "conv2b_branch2b_s"
   type: "Convolution"
-  bottom: "bn_2b_branch2b_1x3x3"
-  top: "conv2b_branch2b_1x3x3"
+  bottom: "bn_2b_branch2b_s"
+  top: "conv2b_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 144
@@ -560,53 +576,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_2b_branch2b_3x1x1"
-  type: "SyncBN"
-  bottom: "conv2b_branch2b_1x3x3"
-  top: "bn_2b_branch2b_3x1x1"
+  name: "bn_2b_branch2b_t"
+  type: "BN"
+  bottom: "conv2b_branch2b_s"
+  top: "bn_2b_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "2b_branch2b_3x1x1_relu"
+  name: "2b_branch2b_t_relu"
   type: "ReLU"
-  bottom: "bn_2b_branch2b_3x1x1"
-  top: "bn_2b_branch2b_3x1x1"
+  bottom: "bn_2b_branch2b_t"
+  top: "bn_2b_branch2b_t"
 }
 layer {
-  name: "conv2b_branch2b_3x1x1"
+  name: "conv2b_branch2b_t"
   type: "Convolution"
-  bottom: "bn_2b_branch2b_3x1x1"
-  top: "conv2b_branch2b_3x1x1"
+  bottom: "bn_2b_branch2b_t"
+  top: "conv2b_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 64
@@ -624,7 +642,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
@@ -633,31 +651,33 @@ layer {
   name: "eltadd_2b"
   type: "Eltwise"
   bottom: "eltadd_2a"
-  bottom: "conv2b_branch2b_3x1x1"
+  bottom: "conv2b_branch2b_t"
   top: "eltadd_2b"
 }
 layer {
   name: "bn_3a"
-  type: "SyncBN"
+  type: "BN"
   bottom: "eltadd_2b"
   top: "bn_3a"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -667,17 +687,17 @@ layer {
   top: "bn_3a"
 }
 layer {
-  name: "conv3a_branch1_1x3x3"
+  name: "conv3a_branch1_s"
   type: "Convolution"
   bottom: "bn_3a"
-  top: "conv3a_branch1_1x3x3"
+  top: "conv3a_branch1_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 230
@@ -695,53 +715,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_3a_branch1_3x1x1"
-  type: "SyncBN"
-  bottom: "conv3a_branch1_1x3x3"
-  top: "bn_3a_branch1_3x1x1"
+  name: "bn_3a_branch1_t"
+  type: "BN"
+  bottom: "conv3a_branch1_s"
+  top: "bn_3a_branch1_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "3a_branch1_3x1x1_relu"
+  name: "3a_branch1_t_relu"
   type: "ReLU"
-  bottom: "bn_3a_branch1_3x1x1"
-  top: "bn_3a_branch1_3x1x1"
+  bottom: "bn_3a_branch1_t"
+  top: "bn_3a_branch1_t"
 }
 layer {
-  name: "conv3a_branch1_3x1x1"
+  name: "conv3a_branch1_t"
   type: "Convolution"
-  bottom: "bn_3a_branch1_3x1x1"
-  top: "conv3a_branch1_3x1x1"
+  bottom: "bn_3a_branch1_t"
+  top: "conv3a_branch1_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 128
@@ -759,23 +781,23 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "conv3a_branch2a_1x3x3"
+  name: "conv3a_branch2a_s"
   type: "Convolution"
   bottom: "bn_3a"
-  top: "conv3a_branch2a_1x3x3"
+  top: "conv3a_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 230
@@ -793,53 +815,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_3a_branch2a_3x1x1"
-  type: "SyncBN"
-  bottom: "conv3a_branch2a_1x3x3"
-  top: "bn_3a_branch2a_3x1x1"
+  name: "bn_3a_branch2a_t"
+  type: "BN"
+  bottom: "conv3a_branch2a_s"
+  top: "bn_3a_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "3a_branch2a_3x1x1_relu"
+  name: "3a_branch2a_t_relu"
   type: "ReLU"
-  bottom: "bn_3a_branch2a_3x1x1"
-  top: "bn_3a_branch2a_3x1x1"
+  bottom: "bn_3a_branch2a_t"
+  top: "bn_3a_branch2a_t"
 }
 layer {
-  name: "conv3a_branch2a_3x1x1"
+  name: "conv3a_branch2a_t"
   type: "Convolution"
-  bottom: "bn_3a_branch2a_3x1x1"
-  top: "conv3a_branch2a_3x1x1"
+  bottom: "bn_3a_branch2a_t"
+  top: "conv3a_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 128
@@ -857,53 +881,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_3a_branch2b_1x3x3"
-  type: "SyncBN"
-  bottom: "conv3a_branch2a_3x1x1"
-  top: "bn_3a_branch2b_1x3x3"
+  name: "bn_3a_branch2b_s"
+  type: "BN"
+  bottom: "conv3a_branch2a_t"
+  top: "bn_3a_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "3a_branch2b_1x3x3_relu"
+  name: "3a_branch2b_s_relu"
   type: "ReLU"
-  bottom: "bn_3a_branch2b_1x3x3"
-  top: "bn_3a_branch2b_1x3x3"
+  bottom: "bn_3a_branch2b_s"
+  top: "bn_3a_branch2b_s"
 }
 layer {
-  name: "conv3a_branch2b_1x3x3"
+  name: "conv3a_branch2b_s"
   type: "Convolution"
-  bottom: "bn_3a_branch2b_1x3x3"
-  top: "conv3a_branch2b_1x3x3"
+  bottom: "bn_3a_branch2b_s"
+  top: "conv3a_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 288
@@ -921,53 +947,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_3a_branch2b_3x1x1"
-  type: "SyncBN"
-  bottom: "conv3a_branch2b_1x3x3"
-  top: "bn_3a_branch2b_3x1x1"
+  name: "bn_3a_branch2b_t"
+  type: "BN"
+  bottom: "conv3a_branch2b_s"
+  top: "bn_3a_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "3a_branch2b_3x1x1_relu"
+  name: "3a_branch2b_t_relu"
   type: "ReLU"
-  bottom: "bn_3a_branch2b_3x1x1"
-  top: "bn_3a_branch2b_3x1x1"
+  bottom: "bn_3a_branch2b_t"
+  top: "bn_3a_branch2b_t"
 }
 layer {
-  name: "conv3a_branch2b_3x1x1"
+  name: "conv3a_branch2b_t"
   type: "Convolution"
-  bottom: "bn_3a_branch2b_3x1x1"
-  top: "conv3a_branch2b_3x1x1"
+  bottom: "bn_3a_branch2b_t"
+  top: "conv3a_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 128
@@ -985,7 +1013,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
@@ -993,52 +1021,54 @@ layer {
 layer {
   name: "eltadd_3a"
   type: "Eltwise"
-  bottom: "conv3a_branch1_3x1x1"
-  bottom: "conv3a_branch2b_3x1x1"
+  bottom: "conv3a_branch1_t"
+  bottom: "conv3a_branch2b_t"
   top: "eltadd_3a"
 }
 layer {
-  name: "bn_3b_branch2a_1x3x3"
-  type: "SyncBN"
+  name: "bn_3b_branch2a_s"
+  type: "BN"
   bottom: "eltadd_3a"
-  top: "bn_3b_branch2a_1x3x3"
+  top: "bn_3b_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "3b_branch2a_1x3x3_relu"
+  name: "3b_branch2a_s_relu"
   type: "ReLU"
-  bottom: "bn_3b_branch2a_1x3x3"
-  top: "bn_3b_branch2a_1x3x3"
+  bottom: "bn_3b_branch2a_s"
+  top: "bn_3b_branch2a_s"
 }
 layer {
-  name: "conv3b_branch2a_1x3x3"
+  name: "conv3b_branch2a_s"
   type: "Convolution"
-  bottom: "bn_3b_branch2a_1x3x3"
-  top: "conv3b_branch2a_1x3x3"
+  bottom: "bn_3b_branch2a_s"
+  top: "conv3b_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 288
@@ -1056,53 +1086,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_3b_branch2a_3x1x1"
-  type: "SyncBN"
-  bottom: "conv3b_branch2a_1x3x3"
-  top: "bn_3b_branch2a_3x1x1"
+  name: "bn_3b_branch2a_t"
+  type: "BN"
+  bottom: "conv3b_branch2a_s"
+  top: "bn_3b_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "3b_branch2a_3x1x1_relu"
+  name: "3b_branch2a_t_relu"
   type: "ReLU"
-  bottom: "bn_3b_branch2a_3x1x1"
-  top: "bn_3b_branch2a_3x1x1"
+  bottom: "bn_3b_branch2a_t"
+  top: "bn_3b_branch2a_t"
 }
 layer {
-  name: "conv3b_branch2a_3x1x1"
+  name: "conv3b_branch2a_t"
   type: "Convolution"
-  bottom: "bn_3b_branch2a_3x1x1"
-  top: "conv3b_branch2a_3x1x1"
+  bottom: "bn_3b_branch2a_t"
+  top: "conv3b_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 128
@@ -1120,53 +1152,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_3b_branch2b_1x3x3"
-  type: "SyncBN"
-  bottom: "conv3b_branch2a_3x1x1"
-  top: "bn_3b_branch2b_1x3x3"
+  name: "bn_3b_branch2b_s"
+  type: "BN"
+  bottom: "conv3b_branch2a_t"
+  top: "bn_3b_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "3b_branch2b_1x3x3_relu"
+  name: "3b_branch2b_s_relu"
   type: "ReLU"
-  bottom: "bn_3b_branch2b_1x3x3"
-  top: "bn_3b_branch2b_1x3x3"
+  bottom: "bn_3b_branch2b_s"
+  top: "bn_3b_branch2b_s"
 }
 layer {
-  name: "conv3b_branch2b_1x3x3"
+  name: "conv3b_branch2b_s"
   type: "Convolution"
-  bottom: "bn_3b_branch2b_1x3x3"
-  top: "conv3b_branch2b_1x3x3"
+  bottom: "bn_3b_branch2b_s"
+  top: "conv3b_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 288
@@ -1184,53 +1218,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_3b_branch2b_3x1x1"
-  type: "SyncBN"
-  bottom: "conv3b_branch2b_1x3x3"
-  top: "bn_3b_branch2b_3x1x1"
+  name: "bn_3b_branch2b_t"
+  type: "BN"
+  bottom: "conv3b_branch2b_s"
+  top: "bn_3b_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "3b_branch2b_3x1x1_relu"
+  name: "3b_branch2b_t_relu"
   type: "ReLU"
-  bottom: "bn_3b_branch2b_3x1x1"
-  top: "bn_3b_branch2b_3x1x1"
+  bottom: "bn_3b_branch2b_t"
+  top: "bn_3b_branch2b_t"
 }
 layer {
-  name: "conv3b_branch2b_3x1x1"
+  name: "conv3b_branch2b_t"
   type: "Convolution"
-  bottom: "bn_3b_branch2b_3x1x1"
-  top: "conv3b_branch2b_3x1x1"
+  bottom: "bn_3b_branch2b_t"
+  top: "conv3b_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 128
@@ -1248,7 +1284,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
@@ -1257,31 +1293,33 @@ layer {
   name: "eltadd_3b"
   type: "Eltwise"
   bottom: "eltadd_3a"
-  bottom: "conv3b_branch2b_3x1x1"
+  bottom: "conv3b_branch2b_t"
   top: "eltadd_3b"
 }
 layer {
   name: "bn_4a"
-  type: "SyncBN"
+  type: "BN"
   bottom: "eltadd_3b"
   top: "bn_4a"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1291,17 +1329,17 @@ layer {
   top: "bn_4a"
 }
 layer {
-  name: "conv4a_branch1_1x3x3"
+  name: "conv4a_branch1_s"
   type: "Convolution"
   bottom: "bn_4a"
-  top: "conv4a_branch1_1x3x3"
+  top: "conv4a_branch1_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 460
@@ -1319,53 +1357,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_4a_branch1_3x1x1"
-  type: "SyncBN"
-  bottom: "conv4a_branch1_1x3x3"
-  top: "bn_4a_branch1_3x1x1"
+  name: "bn_4a_branch1_t"
+  type: "BN"
+  bottom: "conv4a_branch1_s"
+  top: "bn_4a_branch1_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "4a_branch1_3x1x1_relu"
+  name: "4a_branch1_t_relu"
   type: "ReLU"
-  bottom: "bn_4a_branch1_3x1x1"
-  top: "bn_4a_branch1_3x1x1"
+  bottom: "bn_4a_branch1_t"
+  top: "bn_4a_branch1_t"
 }
 layer {
-  name: "conv4a_branch1_3x1x1"
+  name: "conv4a_branch1_t"
   type: "Convolution"
-  bottom: "bn_4a_branch1_3x1x1"
-  top: "conv4a_branch1_3x1x1"
+  bottom: "bn_4a_branch1_t"
+  top: "conv4a_branch1_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 256
@@ -1383,23 +1423,23 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "conv4a_branch2a_1x3x3"
+  name: "conv4a_branch2a_s"
   type: "Convolution"
   bottom: "bn_4a"
-  top: "conv4a_branch2a_1x3x3"
+  top: "conv4a_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 460
@@ -1417,53 +1457,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_4a_branch2a_3x1x1"
-  type: "SyncBN"
-  bottom: "conv4a_branch2a_1x3x3"
-  top: "bn_4a_branch2a_3x1x1"
+  name: "bn_4a_branch2a_t"
+  type: "BN"
+  bottom: "conv4a_branch2a_s"
+  top: "bn_4a_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "4a_branch2a_3x1x1_relu"
+  name: "4a_branch2a_t_relu"
   type: "ReLU"
-  bottom: "bn_4a_branch2a_3x1x1"
-  top: "bn_4a_branch2a_3x1x1"
+  bottom: "bn_4a_branch2a_t"
+  top: "bn_4a_branch2a_t"
 }
 layer {
-  name: "conv4a_branch2a_3x1x1"
+  name: "conv4a_branch2a_t"
   type: "Convolution"
-  bottom: "bn_4a_branch2a_3x1x1"
-  top: "conv4a_branch2a_3x1x1"
+  bottom: "bn_4a_branch2a_t"
+  top: "conv4a_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 256
@@ -1481,53 +1523,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_4a_branch2b_1x3x3"
-  type: "SyncBN"
-  bottom: "conv4a_branch2a_3x1x1"
-  top: "bn_4a_branch2b_1x3x3"
+  name: "bn_4a_branch2b_s"
+  type: "BN"
+  bottom: "conv4a_branch2a_t"
+  top: "bn_4a_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "4a_branch2b_1x3x3_relu"
+  name: "4a_branch2b_s_relu"
   type: "ReLU"
-  bottom: "bn_4a_branch2b_1x3x3"
-  top: "bn_4a_branch2b_1x3x3"
+  bottom: "bn_4a_branch2b_s"
+  top: "bn_4a_branch2b_s"
 }
 layer {
-  name: "conv4a_branch2b_1x3x3"
+  name: "conv4a_branch2b_s"
   type: "Convolution"
-  bottom: "bn_4a_branch2b_1x3x3"
-  top: "conv4a_branch2b_1x3x3"
+  bottom: "bn_4a_branch2b_s"
+  top: "conv4a_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 576
@@ -1545,53 +1589,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_4a_branch2b_3x1x1"
-  type: "SyncBN"
-  bottom: "conv4a_branch2b_1x3x3"
-  top: "bn_4a_branch2b_3x1x1"
+  name: "bn_4a_branch2b_t"
+  type: "BN"
+  bottom: "conv4a_branch2b_s"
+  top: "bn_4a_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "4a_branch2b_3x1x1_relu"
+  name: "4a_branch2b_t_relu"
   type: "ReLU"
-  bottom: "bn_4a_branch2b_3x1x1"
-  top: "bn_4a_branch2b_3x1x1"
+  bottom: "bn_4a_branch2b_t"
+  top: "bn_4a_branch2b_t"
 }
 layer {
-  name: "conv4a_branch2b_3x1x1"
+  name: "conv4a_branch2b_t"
   type: "Convolution"
-  bottom: "bn_4a_branch2b_3x1x1"
-  top: "conv4a_branch2b_3x1x1"
+  bottom: "bn_4a_branch2b_t"
+  top: "conv4a_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 256
@@ -1609,7 +1655,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
@@ -1617,52 +1663,54 @@ layer {
 layer {
   name: "eltadd_4a"
   type: "Eltwise"
-  bottom: "conv4a_branch1_3x1x1"
-  bottom: "conv4a_branch2b_3x1x1"
+  bottom: "conv4a_branch1_t"
+  bottom: "conv4a_branch2b_t"
   top: "eltadd_4a"
 }
 layer {
-  name: "bn_4b_branch2a_1x3x3"
-  type: "SyncBN"
+  name: "bn_4b_branch2a_s"
+  type: "BN"
   bottom: "eltadd_4a"
-  top: "bn_4b_branch2a_1x3x3"
+  top: "bn_4b_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "4b_branch2a_1x3x3_relu"
+  name: "4b_branch2a_s_relu"
   type: "ReLU"
-  bottom: "bn_4b_branch2a_1x3x3"
-  top: "bn_4b_branch2a_1x3x3"
+  bottom: "bn_4b_branch2a_s"
+  top: "bn_4b_branch2a_s"
 }
 layer {
-  name: "conv4b_branch2a_1x3x3"
+  name: "conv4b_branch2a_s"
   type: "Convolution"
-  bottom: "bn_4b_branch2a_1x3x3"
-  top: "conv4b_branch2a_1x3x3"
+  bottom: "bn_4b_branch2a_s"
+  top: "conv4b_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 576
@@ -1680,53 +1728,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_4b_branch2a_3x1x1"
-  type: "SyncBN"
-  bottom: "conv4b_branch2a_1x3x3"
-  top: "bn_4b_branch2a_3x1x1"
+  name: "bn_4b_branch2a_t"
+  type: "BN"
+  bottom: "conv4b_branch2a_s"
+  top: "bn_4b_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "4b_branch2a_3x1x1_relu"
+  name: "4b_branch2a_t_relu"
   type: "ReLU"
-  bottom: "bn_4b_branch2a_3x1x1"
-  top: "bn_4b_branch2a_3x1x1"
+  bottom: "bn_4b_branch2a_t"
+  top: "bn_4b_branch2a_t"
 }
 layer {
-  name: "conv4b_branch2a_3x1x1"
+  name: "conv4b_branch2a_t"
   type: "Convolution"
-  bottom: "bn_4b_branch2a_3x1x1"
-  top: "conv4b_branch2a_3x1x1"
+  bottom: "bn_4b_branch2a_t"
+  top: "conv4b_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 256
@@ -1744,53 +1794,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_4b_branch2b_1x3x3"
-  type: "SyncBN"
-  bottom: "conv4b_branch2a_3x1x1"
-  top: "bn_4b_branch2b_1x3x3"
+  name: "bn_4b_branch2b_s"
+  type: "BN"
+  bottom: "conv4b_branch2a_t"
+  top: "bn_4b_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "4b_branch2b_1x3x3_relu"
+  name: "4b_branch2b_s_relu"
   type: "ReLU"
-  bottom: "bn_4b_branch2b_1x3x3"
-  top: "bn_4b_branch2b_1x3x3"
+  bottom: "bn_4b_branch2b_s"
+  top: "bn_4b_branch2b_s"
 }
 layer {
-  name: "conv4b_branch2b_1x3x3"
+  name: "conv4b_branch2b_s"
   type: "Convolution"
-  bottom: "bn_4b_branch2b_1x3x3"
-  top: "conv4b_branch2b_1x3x3"
+  bottom: "bn_4b_branch2b_s"
+  top: "conv4b_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 576
@@ -1808,53 +1860,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_4b_branch2b_3x1x1"
-  type: "SyncBN"
-  bottom: "conv4b_branch2b_1x3x3"
-  top: "bn_4b_branch2b_3x1x1"
+  name: "bn_4b_branch2b_t"
+  type: "BN"
+  bottom: "conv4b_branch2b_s"
+  top: "bn_4b_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "4b_branch2b_3x1x1_relu"
+  name: "4b_branch2b_t_relu"
   type: "ReLU"
-  bottom: "bn_4b_branch2b_3x1x1"
-  top: "bn_4b_branch2b_3x1x1"
+  bottom: "bn_4b_branch2b_t"
+  top: "bn_4b_branch2b_t"
 }
 layer {
-  name: "conv4b_branch2b_3x1x1"
+  name: "conv4b_branch2b_t"
   type: "Convolution"
-  bottom: "bn_4b_branch2b_3x1x1"
-  top: "conv4b_branch2b_3x1x1"
+  bottom: "bn_4b_branch2b_t"
+  top: "conv4b_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 256
@@ -1872,7 +1926,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
@@ -1881,31 +1935,33 @@ layer {
   name: "eltadd_4b"
   type: "Eltwise"
   bottom: "eltadd_4a"
-  bottom: "conv4b_branch2b_3x1x1"
+  bottom: "conv4b_branch2b_t"
   top: "eltadd_4b"
 }
 layer {
   name: "bn_5a"
-  type: "SyncBN"
+  type: "BN"
   bottom: "eltadd_4b"
   top: "bn_5a"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -1915,17 +1971,17 @@ layer {
   top: "bn_5a"
 }
 layer {
-  name: "conv5a_branch1_1x3x3"
+  name: "conv5a_branch1_s"
   type: "Convolution"
   bottom: "bn_5a"
-  top: "conv5a_branch1_1x3x3"
+  top: "conv5a_branch1_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 921
@@ -1943,53 +1999,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_5a_branch1_3x1x1"
-  type: "SyncBN"
-  bottom: "conv5a_branch1_1x3x3"
-  top: "bn_5a_branch1_3x1x1"
+  name: "bn_5a_branch1_t"
+  type: "BN"
+  bottom: "conv5a_branch1_s"
+  top: "bn_5a_branch1_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "5a_branch1_3x1x1_relu"
+  name: "5a_branch1_t_relu"
   type: "ReLU"
-  bottom: "bn_5a_branch1_3x1x1"
-  top: "bn_5a_branch1_3x1x1"
+  bottom: "bn_5a_branch1_t"
+  top: "bn_5a_branch1_t"
 }
 layer {
-  name: "conv5a_branch1_3x1x1"
+  name: "conv5a_branch1_t"
   type: "Convolution"
-  bottom: "bn_5a_branch1_3x1x1"
-  top: "conv5a_branch1_3x1x1"
+  bottom: "bn_5a_branch1_t"
+  top: "conv5a_branch1_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -2007,23 +2065,23 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "conv5a_branch2a_1x3x3"
+  name: "conv5a_branch2a_s"
   type: "Convolution"
   bottom: "bn_5a"
-  top: "conv5a_branch2a_1x3x3"
+  top: "conv5a_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 921
@@ -2041,53 +2099,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_5a_branch2a_3x1x1"
-  type: "SyncBN"
-  bottom: "conv5a_branch2a_1x3x3"
-  top: "bn_5a_branch2a_3x1x1"
+  name: "bn_5a_branch2a_t"
+  type: "BN"
+  bottom: "conv5a_branch2a_s"
+  top: "bn_5a_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "5a_branch2a_3x1x1_relu"
+  name: "5a_branch2a_t_relu"
   type: "ReLU"
-  bottom: "bn_5a_branch2a_3x1x1"
-  top: "bn_5a_branch2a_3x1x1"
+  bottom: "bn_5a_branch2a_t"
+  top: "bn_5a_branch2a_t"
 }
 layer {
-  name: "conv5a_branch2a_3x1x1"
+  name: "conv5a_branch2a_t"
   type: "Convolution"
-  bottom: "bn_5a_branch2a_3x1x1"
-  top: "conv5a_branch2a_3x1x1"
+  bottom: "bn_5a_branch2a_t"
+  top: "conv5a_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -2105,53 +2165,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_5a_branch2b_1x3x3"
-  type: "SyncBN"
-  bottom: "conv5a_branch2a_3x1x1"
-  top: "bn_5a_branch2b_1x3x3"
+  name: "bn_5a_branch2b_s"
+  type: "BN"
+  bottom: "conv5a_branch2a_t"
+  top: "bn_5a_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "5a_branch2b_1x3x3_relu"
+  name: "5a_branch2b_s_relu"
   type: "ReLU"
-  bottom: "bn_5a_branch2b_1x3x3"
-  top: "bn_5a_branch2b_1x3x3"
+  bottom: "bn_5a_branch2b_s"
+  top: "bn_5a_branch2b_s"
 }
 layer {
-  name: "conv5a_branch2b_1x3x3"
+  name: "conv5a_branch2b_s"
   type: "Convolution"
-  bottom: "bn_5a_branch2b_1x3x3"
-  top: "conv5a_branch2b_1x3x3"
+  bottom: "bn_5a_branch2b_s"
+  top: "conv5a_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 1152
@@ -2169,53 +2231,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_5a_branch2b_3x1x1"
-  type: "SyncBN"
-  bottom: "conv5a_branch2b_1x3x3"
-  top: "bn_5a_branch2b_3x1x1"
+  name: "bn_5a_branch2b_t"
+  type: "BN"
+  bottom: "conv5a_branch2b_s"
+  top: "bn_5a_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "5a_branch2b_3x1x1_relu"
+  name: "5a_branch2b_t_relu"
   type: "ReLU"
-  bottom: "bn_5a_branch2b_3x1x1"
-  top: "bn_5a_branch2b_3x1x1"
+  bottom: "bn_5a_branch2b_t"
+  top: "bn_5a_branch2b_t"
 }
 layer {
-  name: "conv5a_branch2b_3x1x1"
+  name: "conv5a_branch2b_t"
   type: "Convolution"
-  bottom: "bn_5a_branch2b_3x1x1"
-  top: "conv5a_branch2b_3x1x1"
+  bottom: "bn_5a_branch2b_t"
+  top: "conv5a_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -2233,7 +2297,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
@@ -2241,52 +2305,54 @@ layer {
 layer {
   name: "eltadd_5a"
   type: "Eltwise"
-  bottom: "conv5a_branch1_3x1x1"
-  bottom: "conv5a_branch2b_3x1x1"
+  bottom: "conv5a_branch1_t"
+  bottom: "conv5a_branch2b_t"
   top: "eltadd_5a"
 }
 layer {
-  name: "bn_5b_branch2a_1x3x3"
-  type: "SyncBN"
+  name: "bn_5b_branch2a_s"
+  type: "BN"
   bottom: "eltadd_5a"
-  top: "bn_5b_branch2a_1x3x3"
+  top: "bn_5b_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "5b_branch2a_1x3x3_relu"
+  name: "5b_branch2a_s_relu"
   type: "ReLU"
-  bottom: "bn_5b_branch2a_1x3x3"
-  top: "bn_5b_branch2a_1x3x3"
+  bottom: "bn_5b_branch2a_s"
+  top: "bn_5b_branch2a_s"
 }
 layer {
-  name: "conv5b_branch2a_1x3x3"
+  name: "conv5b_branch2a_s"
   type: "Convolution"
-  bottom: "bn_5b_branch2a_1x3x3"
-  top: "conv5b_branch2a_1x3x3"
+  bottom: "bn_5b_branch2a_s"
+  top: "conv5b_branch2a_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 1152
@@ -2304,53 +2370,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_5b_branch2a_3x1x1"
-  type: "SyncBN"
-  bottom: "conv5b_branch2a_1x3x3"
-  top: "bn_5b_branch2a_3x1x1"
+  name: "bn_5b_branch2a_t"
+  type: "BN"
+  bottom: "conv5b_branch2a_s"
+  top: "bn_5b_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "5b_branch2a_3x1x1_relu"
+  name: "5b_branch2a_t_relu"
   type: "ReLU"
-  bottom: "bn_5b_branch2a_3x1x1"
-  top: "bn_5b_branch2a_3x1x1"
+  bottom: "bn_5b_branch2a_t"
+  top: "bn_5b_branch2a_t"
 }
 layer {
-  name: "conv5b_branch2a_3x1x1"
+  name: "conv5b_branch2a_t"
   type: "Convolution"
-  bottom: "bn_5b_branch2a_3x1x1"
-  top: "conv5b_branch2a_3x1x1"
+  bottom: "bn_5b_branch2a_t"
+  top: "conv5b_branch2a_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -2368,53 +2436,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_5b_branch2b_1x3x3"
-  type: "SyncBN"
-  bottom: "conv5b_branch2a_3x1x1"
-  top: "bn_5b_branch2b_1x3x3"
+  name: "bn_5b_branch2b_s"
+  type: "BN"
+  bottom: "conv5b_branch2a_t"
+  top: "bn_5b_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "5b_branch2b_1x3x3_relu"
+  name: "5b_branch2b_s_relu"
   type: "ReLU"
-  bottom: "bn_5b_branch2b_1x3x3"
-  top: "bn_5b_branch2b_1x3x3"
+  bottom: "bn_5b_branch2b_s"
+  top: "bn_5b_branch2b_s"
 }
 layer {
-  name: "conv5b_branch2b_1x3x3"
+  name: "conv5b_branch2b_s"
   type: "Convolution"
-  bottom: "bn_5b_branch2b_1x3x3"
-  top: "conv5b_branch2b_1x3x3"
+  bottom: "bn_5b_branch2b_s"
+  top: "conv5b_branch2b_s"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 1152
@@ -2432,53 +2502,55 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_5b_branch2b_3x1x1"
-  type: "SyncBN"
-  bottom: "conv5b_branch2b_1x3x3"
-  top: "bn_5b_branch2b_3x1x1"
+  name: "bn_5b_branch2b_t"
+  type: "BN"
+  bottom: "conv5b_branch2b_s"
+  top: "bn_5b_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
-  name: "5b_branch2b_3x1x1_relu"
+  name: "5b_branch2b_t_relu"
   type: "ReLU"
-  bottom: "bn_5b_branch2b_3x1x1"
-  top: "bn_5b_branch2b_3x1x1"
+  bottom: "bn_5b_branch2b_t"
+  top: "bn_5b_branch2b_t"
 }
 layer {
-  name: "conv5b_branch2b_3x1x1"
+  name: "conv5b_branch2b_t"
   type: "Convolution"
-  bottom: "bn_5b_branch2b_3x1x1"
-  top: "conv5b_branch2b_3x1x1"
+  bottom: "bn_5b_branch2b_t"
+  top: "conv5b_branch2b_t"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   convolution_param {
     num_output: 512
@@ -2496,7 +2568,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
     engine: CUDNN
   }
@@ -2505,31 +2577,33 @@ layer {
   name: "eltadd_5b"
   type: "Eltwise"
   bottom: "eltadd_5a"
-  bottom: "conv5b_branch2b_3x1x1"
+  bottom: "conv5b_branch2b_t"
   top: "eltadd_5b"
 }
 layer {
   name: "bn_5b"
-  type: "SyncBN"
+  type: "BN"
   bottom: "eltadd_5b"
   top: "bn_5b"
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   param {
-    lr_mult: 1.0
-    decay_mult: 0.0
+    lr_mult: 1
+    decay_mult: 0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1.0
+      value: 1
     }
     bias_filler {
       type: "constant"
-      value: 0.0
+      value: 0
     }
+    frozen: false
+    engine: CUDNN
   }
 }
 layer {
@@ -2566,7 +2640,7 @@ layer {
   bottom: "pool5_reshape"
   top: "pool5_reshape"
   dropout_param {
-    dropout_ratio: 0.20000000298
+    dropout_ratio: 0.2
   }
 }
 layer {
@@ -2575,12 +2649,12 @@ layer {
   bottom: "pool5_reshape"
   top: "fc400"
   param {
-    lr_mult: 1.0
-    decay_mult: 1.0
+    lr_mult: 1
+    decay_mult: 1
   }
   param {
-    lr_mult: 2.0
-    decay_mult: 0.0
+    lr_mult: 2
+    decay_mult: 0
   }
   inner_product_param {
     num_output: 400

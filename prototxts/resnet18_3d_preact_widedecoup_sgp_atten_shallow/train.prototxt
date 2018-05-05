@@ -510,6 +510,50 @@ layer {
   }
   convolution_param {
     num_output: 64
+    pad: 0
+    pad: 0
+    pad: 0
+    kernel_size: 1
+    kernel_size: 1
+    kernel_size: 1
+    stride: 1
+    stride: 1
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+    engine: DEFAULT
+  }
+}
+layer {
+  name: "sgp_2a_branch2b_t"
+  type: "Pooling"
+  bottom: "bn_2a_branch2b_t"
+  top: "sgp_2a_branch2b_t"
+  pooling_param {
+    pool: AVE
+    spatial_global_pooling: true
+  }
+}
+layer {
+  name: "conv2a_branch2b_t_atten"
+  type: "Convolution"
+  bottom: "sgp_2a_branch2b_t"
+  top: "conv2a_branch2b_t_atten"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
     pad: 1
     pad: 0
     pad: 0
@@ -526,20 +570,27 @@ layer {
       type: "constant"
       value: 0
     }
-    engine: CUDNN
+    engine: DEFAULT
   }
 }
 layer {
-  name: "eltadd_2a"
-  type: "Eltwise"
-  bottom: "conv1"
+  name: "sigmoid_2a_branch2b_t"
+  type: "Sigmoid"
+  bottom: "conv2a_branch2b_t_atten"
+  top: "sigmoid_2a_branch2b_t"
+}
+layer {
+  name: "add_2a"
+  type: "Axpxpy"
+  bottom: "sigmoid_2a_branch2b_t"
   bottom: "conv2a_branch2b_t"
-  top: "eltadd_2a"
+  bottom: "conv1"
+  top: "add_2a"
 }
 layer {
   name: "bn_2b_branch2a_s"
   type: "BN"
-  bottom: "eltadd_2a"
+  bottom: "add_2a"
   top: "bn_2b_branch2a_s"
   param {
     lr_mult: 1
@@ -781,6 +832,50 @@ layer {
   }
   convolution_param {
     num_output: 64
+    pad: 0
+    pad: 0
+    pad: 0
+    kernel_size: 1
+    kernel_size: 1
+    kernel_size: 1
+    stride: 1
+    stride: 1
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+    engine: DEFAULT
+  }
+}
+layer {
+  name: "sgp_2b_branch2b_t"
+  type: "Pooling"
+  bottom: "bn_2b_branch2b_t"
+  top: "sgp_2b_branch2b_t"
+  pooling_param {
+    pool: AVE
+    spatial_global_pooling: true
+  }
+}
+layer {
+  name: "conv2b_branch2b_t_atten"
+  type: "Convolution"
+  bottom: "sgp_2b_branch2b_t"
+  top: "conv2b_branch2b_t_atten"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 64
     pad: 1
     pad: 0
     pad: 0
@@ -797,20 +892,27 @@ layer {
       type: "constant"
       value: 0
     }
-    engine: CUDNN
+    engine: DEFAULT
   }
 }
 layer {
-  name: "eltadd_2b"
-  type: "Eltwise"
-  bottom: "eltadd_2a"
+  name: "sigmoid_2b_branch2b_t"
+  type: "Sigmoid"
+  bottom: "conv2b_branch2b_t_atten"
+  top: "sigmoid_2b_branch2b_t"
+}
+layer {
+  name: "add_2b"
+  type: "Axpxpy"
+  bottom: "sigmoid_2b_branch2b_t"
   bottom: "conv2b_branch2b_t"
-  top: "eltadd_2b"
+  bottom: "add_2a"
+  top: "add_2b"
 }
 layer {
   name: "bn_3a"
   type: "BN"
-  bottom: "eltadd_2b"
+  bottom: "add_2b"
   top: "bn_3a"
   param {
     lr_mult: 1
@@ -1152,6 +1254,50 @@ layer {
   }
   convolution_param {
     num_output: 128
+    pad: 0
+    pad: 0
+    pad: 0
+    kernel_size: 1
+    kernel_size: 1
+    kernel_size: 1
+    stride: 1
+    stride: 1
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+    engine: DEFAULT
+  }
+}
+layer {
+  name: "sgp_3a_branch2b_t"
+  type: "Pooling"
+  bottom: "bn_3a_branch2b_t"
+  top: "sgp_3a_branch2b_t"
+  pooling_param {
+    pool: AVE
+    spatial_global_pooling: true
+  }
+}
+layer {
+  name: "conv3a_branch2b_t_atten"
+  type: "Convolution"
+  bottom: "sgp_3a_branch2b_t"
+  top: "conv3a_branch2b_t_atten"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
     pad: 1
     pad: 0
     pad: 0
@@ -1168,20 +1314,27 @@ layer {
       type: "constant"
       value: 0
     }
-    engine: CUDNN
+    engine: DEFAULT
   }
 }
 layer {
-  name: "eltadd_3a"
-  type: "Eltwise"
-  bottom: "conv3a_branch1_t"
+  name: "sigmoid_3a_branch2b_t"
+  type: "Sigmoid"
+  bottom: "conv3a_branch2b_t_atten"
+  top: "sigmoid_3a_branch2b_t"
+}
+layer {
+  name: "add_3a"
+  type: "Axpxpy"
+  bottom: "sigmoid_3a_branch2b_t"
   bottom: "conv3a_branch2b_t"
-  top: "eltadd_3a"
+  bottom: "conv3a_branch1_t"
+  top: "add_3a"
 }
 layer {
   name: "bn_3b_branch2a_s"
   type: "BN"
-  bottom: "eltadd_3a"
+  bottom: "add_3a"
   top: "bn_3b_branch2a_s"
   param {
     lr_mult: 1
@@ -1423,6 +1576,50 @@ layer {
   }
   convolution_param {
     num_output: 128
+    pad: 0
+    pad: 0
+    pad: 0
+    kernel_size: 1
+    kernel_size: 1
+    kernel_size: 1
+    stride: 1
+    stride: 1
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0
+    }
+    engine: DEFAULT
+  }
+}
+layer {
+  name: "sgp_3b_branch2b_t"
+  type: "Pooling"
+  bottom: "bn_3b_branch2b_t"
+  top: "sgp_3b_branch2b_t"
+  pooling_param {
+    pool: AVE
+    spatial_global_pooling: true
+  }
+}
+layer {
+  name: "conv3b_branch2b_t_atten"
+  type: "Convolution"
+  bottom: "sgp_3b_branch2b_t"
+  top: "conv3b_branch2b_t_atten"
+  param {
+    lr_mult: 1
+    decay_mult: 1
+  }
+  param {
+    lr_mult: 2
+    decay_mult: 0
+  }
+  convolution_param {
+    num_output: 128
     pad: 1
     pad: 0
     pad: 0
@@ -1439,20 +1636,27 @@ layer {
       type: "constant"
       value: 0
     }
-    engine: CUDNN
+    engine: DEFAULT
   }
 }
 layer {
-  name: "eltadd_3b"
-  type: "Eltwise"
-  bottom: "eltadd_3a"
+  name: "sigmoid_3b_branch2b_t"
+  type: "Sigmoid"
+  bottom: "conv3b_branch2b_t_atten"
+  top: "sigmoid_3b_branch2b_t"
+}
+layer {
+  name: "add_3b"
+  type: "Axpxpy"
+  bottom: "sigmoid_3b_branch2b_t"
   bottom: "conv3b_branch2b_t"
-  top: "eltadd_3b"
+  bottom: "add_3a"
+  top: "add_3b"
 }
 layer {
   name: "bn_4a"
   type: "BN"
-  bottom: "eltadd_3b"
+  bottom: "add_3b"
   top: "bn_4a"
   param {
     lr_mult: 1
