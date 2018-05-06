@@ -225,6 +225,65 @@ class SgpAttenModule(BaseModule):
 
         return out
 
+class SgpAttenPlusTConvModule(BaseModule):
+    type='SgpAttenPlusTConv'
+    def __init__(self, name_template, bn_params, stride, num_output, sync_bn=False, uni_bn=True, scale_params=None):
+        self.uni_bn = uni_bn
+        self.sync_bn = sync_bn
+        self.stride = stride
+        self.name_template = name_template
+        # scale_params cannot be None when using BatchNorm
+        if not uni_bn and scale_params is None:
+            scale_params = dict()
+        if uni_bn:
+            self.bnParams = bn_params.copy()
+        else:
+            self.batchNormParams = bn_params.copy()
+            self.scaleParams = scale_params.copy()
+        self.reluParams = dict(name=name_template + '_relu')
+        self.conv3x1x1Params = dict(name='conv'+name_template, \
+                                    num_output=num_output, \
+                                    kernel_size=[3, 1, 1], \
+                                    pad=[1, 0, 0], \
+                                    stride=[stride, 1, 1])
+        self.t_convParams = dict(name='conv'+name_template+'_atten', \
+                                num_output=num_output, \
+                                kernel_size=[3, 1, 1], \
+                                pad=[1, 0, 0], \
+                                stride=[stride, 1, 1])
+        self.poolingParams = dict(name='sgp_'+name_template, \
+                                pool=P.Pooling.AVE, \
+                                spatial_global_pooling=True)
+        self.sigmoidParams = dict(name='sigmoid_'+name_template)
+        ## axpxpy params ##
+        self.addParams = dict(name='add_'+name_template[:2])
+
+    def attach(self, netspec, bottom, residual_branch):
+
+        ######## Pre Norm ########
+        prenorm = BNReLUModule(name_template=self.name_template, \
+                                bn_params=self.bnParams, \
+                                sync_bn=self.sync_bn).attach(netspec, bottom)
+
+        ######## 1x1x1 Shortcut ########
+        shortcut = BaseModule('Convolution', self.conv3x1x1Params).attach(netspec, [prenorm])
+
+        ######## Main Branch ########
+
+        #### Spatial Global Pooling ####
+        pooling = BaseModule('Pooling', self.poolingParams).attach(netspec, [prenorm])
+
+        #### Temporal Convolution ####
+        t_conv = BaseModule('Convolution', self.t_convParams).attach(netspec, [pooling])
+
+        #### Sigmoid ####
+        sigmoid = BaseModule('Sigmoid', self.sigmoidParams).attach(netspec, [t_conv])
+
+        ######## add ########
+        out = BaseModule('Axpxpy', self.addParams).attach(netspec, [sigmoid, shortcut, residual_branch])
+
+        return out
+
 class PyramidTemporalConvModule(BaseModule):
     type='PyramidTemporalConv' # start from here
     def __init__(self, name_template, bn_params, stride, num_output, sync_bn=False, uni_bn=True):
