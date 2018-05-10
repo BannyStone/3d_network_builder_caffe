@@ -28,7 +28,7 @@ from caffe import params as P
 
 sys.path.append('../lib')
 from base import BaseModule
-from modules import BNReLUModule, BNReLUConvModule
+from modules import BNReLUModule, BNReLUConvModule, SgpAttenModule
 from blocks import PreActWiderDecoupBlock, PreActWiderDecoupSgpAttenBlock, PreActWiderDecoupSgpAttenStrongestBlock
 
 num2letter = ['a', 'b', 'c', 'd', 'e', 'f']
@@ -44,8 +44,8 @@ def write_prototxt(is_train, output_folder, \
     crop_size = 112
     width = 170
     height = 128
-    length = 8
-    step = 2
+    length = 16
+    step = 1
     num_segments = 1
 
     if is_train:
@@ -113,15 +113,24 @@ def write_prototxt(is_train, output_folder, \
         netspec.data_reshape = BaseModule('Reshape', reshape_params).attach(netspec, [netspec.data])
 
     #### Stage 1 ####
-    channels = 64
-    conv1xdxd_params = dict(name='conv1_1x3x3', \
+    channels = 3*7*7*3*64/(7*7*3+3*64)
+    name = '1_s'
+    conv1xdxd_params = dict(name='conv'+name, \
                             num_output=channels, \
                             kernel_size=[1, 7, 7], \
                             pad=[0, 3, 3], \
                             stride=[1, 2, 2], \
                             engine=2)
-    stage1 = BaseModule('Convolution', conv1xdxd_params).attach(
+    conv1xdxd = BaseModule('Convolution', conv1xdxd_params).attach(
                             netspec, [netspec.data_reshape if is_train else netspec.data])
+    name = '1_t'
+    stage1 = SgpAttenModule(name_template=name, \
+                            bn_params=dict(frozen=False), \
+                            stride=2, \
+                            num_output=64, \
+                            t_conv=False, \
+                            sync_bn=sync_bn, \
+                            uni_bn=uni_bn).attach(netspec, [conv1xdxd])
     num_output = num_output_stage1
 
     #### Stages 2 - 5 ####

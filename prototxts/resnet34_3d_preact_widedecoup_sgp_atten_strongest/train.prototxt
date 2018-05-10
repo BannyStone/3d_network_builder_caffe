@@ -9,35 +9,59 @@ layer {
   transform_param {
     mirror: true
     crop_size: 112
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
     multi_scale: true
-    scale_ratios: 1
+    scale_ratios: 1.0
     scale_ratios: 0.875
     scale_ratios: 0.75
-    scale_ratios: 0.66
+    scale_ratios: 0.660000026226
     max_distort: 1
   }
   video4d_data_param {
@@ -46,12 +70,12 @@ layer {
     shuffle: true
     new_height: 128
     new_width: 170
-    new_length: 8
+    new_length: 16
     num_segments: 1
     modality: RGB
     name_pattern: "image_%06d.jpg"
     rand_step: true
-    step: 2
+    step: 1
   }
 }
 layer {
@@ -65,41 +89,65 @@ layer {
   transform_param {
     mirror: false
     crop_size: 112
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 104
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 117
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
-    mean_value: 123
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 104.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 117.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
+    mean_value: 123.0
   }
   video4d_data_param {
     source: "../kinetics_val_list.txt"
     batch_size: 1
     new_height: 128
     new_width: 170
-    new_length: 8
+    new_length: 16
     num_segments: 1
     modality: RGB
     name_pattern: "image_%06d.jpg"
-    step: 2
+    step: 1
   }
 }
 layer {
@@ -111,27 +159,27 @@ layer {
     shape {
       dim: -1
       dim: 3
-      dim: 8
+      dim: 16
       dim: 112
       dim: 112
     }
   }
 }
 layer {
-  name: "conv1_1x3x3"
+  name: "conv1_s"
   type: "Convolution"
   bottom: "data_reshape"
-  top: "conv1_1x3x3"
+  top: "conv1_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
-    num_output: 64
+    num_output: 83
     pad: 0
     pad: 3
     pad: 3
@@ -146,32 +194,155 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
 }
 layer {
-  name: "bn_2a_branch2a_s"
+  name: "bn_1_t"
   type: "BN"
-  bottom: "conv1_1x3x3"
-  top: "bn_2a_branch2a_s"
+  bottom: "conv1_s"
+  top: "bn_1_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
+    }
+    frozen: false
+    engine: CUDNN
+  }
+}
+layer {
+  name: "1_t_relu"
+  type: "ReLU"
+  bottom: "bn_1_t"
+  top: "bn_1_t"
+}
+layer {
+  name: "conv1_t"
+  type: "Convolution"
+  bottom: "bn_1_t"
+  top: "conv1_t"
+  param {
+    lr_mult: 1.0
+    decay_mult: 1.0
+  }
+  param {
+    lr_mult: 2.0
+    decay_mult: 0.0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 0
+    pad: 0
+    pad: 0
+    kernel_size: 1
+    kernel_size: 1
+    kernel_size: 1
+    stride: 2
+    stride: 1
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.0
+    }
+    engine: DEFAULT
+  }
+}
+layer {
+  name: "sgp_1_t"
+  type: "Pooling"
+  bottom: "bn_1_t"
+  top: "sgp_1_t"
+  pooling_param {
+    pool: MAX
+    spatial_global_pooling: true
+  }
+}
+layer {
+  name: "conv1_t_atten"
+  type: "Convolution"
+  bottom: "sgp_1_t"
+  top: "conv1_t_atten"
+  param {
+    lr_mult: 1.0
+    decay_mult: 1.0
+  }
+  param {
+    lr_mult: 2.0
+    decay_mult: 0.0
+  }
+  convolution_param {
+    num_output: 64
+    pad: 1
+    pad: 0
+    pad: 0
+    kernel_size: 3
+    kernel_size: 1
+    kernel_size: 1
+    stride: 2
+    stride: 1
+    stride: 1
+    weight_filler {
+      type: "xavier"
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.0
+    }
+    engine: DEFAULT
+  }
+}
+layer {
+  name: "sigmoid_1_t"
+  type: "Sigmoid"
+  bottom: "conv1_t_atten"
+  top: "sigmoid_1_t"
+}
+layer {
+  name: "add_1_t"
+  type: "Axpx"
+  bottom: "sigmoid_1_t"
+  bottom: "conv1_t"
+  top: "add_1_t"
+}
+layer {
+  name: "bn_2a_branch2a_s"
+  type: "BN"
+  bottom: "add_1_t"
+  top: "bn_2a_branch2a_s"
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
+  param {
+    lr_mult: 1.0
+    decay_mult: 0.0
+  }
+  bn_param {
+    slope_filler {
+      type: "constant"
+      value: 1.0
+    }
+    bias_filler {
+      type: "constant"
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -189,12 +360,12 @@ layer {
   bottom: "bn_2a_branch2a_s"
   top: "conv2a_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 144
@@ -212,7 +383,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -223,21 +394,21 @@ layer {
   bottom: "conv2a_branch2a_s"
   top: "bn_2a_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -255,12 +426,12 @@ layer {
   bottom: "bn_2a_branch2a_t"
   top: "conv2a_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -278,7 +449,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -289,7 +460,7 @@ layer {
   bottom: "bn_2a_branch2a_t"
   top: "sgp_2a_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -299,12 +470,12 @@ layer {
   bottom: "sgp_2a_branch2a_t"
   top: "conv2a_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -322,7 +493,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -346,21 +517,21 @@ layer {
   bottom: "add_2a_branch2a_t"
   top: "bn_2a_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -378,12 +549,12 @@ layer {
   bottom: "bn_2a_branch2b_s"
   top: "conv2a_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 144
@@ -401,7 +572,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -412,21 +583,21 @@ layer {
   bottom: "conv2a_branch2b_s"
   top: "bn_2a_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -444,12 +615,12 @@ layer {
   bottom: "bn_2a_branch2b_t"
   top: "conv2a_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -467,7 +638,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -478,7 +649,7 @@ layer {
   bottom: "bn_2a_branch2b_t"
   top: "sgp_2a_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -488,12 +659,12 @@ layer {
   bottom: "sgp_2a_branch2b_t"
   top: "conv2a_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -511,7 +682,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -527,7 +698,7 @@ layer {
   type: "Axpxpy"
   bottom: "sigmoid_2a_branch2b_t"
   bottom: "conv2a_branch2b_t"
-  bottom: "conv1_1x3x3"
+  bottom: "add_1_t"
   top: "add_2a"
 }
 layer {
@@ -536,21 +707,21 @@ layer {
   bottom: "add_2a"
   top: "bn_2b_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -568,12 +739,12 @@ layer {
   bottom: "bn_2b_branch2a_s"
   top: "conv2b_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 144
@@ -591,7 +762,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -602,21 +773,21 @@ layer {
   bottom: "conv2b_branch2a_s"
   top: "bn_2b_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -634,12 +805,12 @@ layer {
   bottom: "bn_2b_branch2a_t"
   top: "conv2b_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -657,7 +828,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -668,7 +839,7 @@ layer {
   bottom: "bn_2b_branch2a_t"
   top: "sgp_2b_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -678,12 +849,12 @@ layer {
   bottom: "sgp_2b_branch2a_t"
   top: "conv2b_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -701,7 +872,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -725,21 +896,21 @@ layer {
   bottom: "add_2b_branch2a_t"
   top: "bn_2b_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -757,12 +928,12 @@ layer {
   bottom: "bn_2b_branch2b_s"
   top: "conv2b_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 144
@@ -780,7 +951,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -791,21 +962,21 @@ layer {
   bottom: "conv2b_branch2b_s"
   top: "bn_2b_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -823,12 +994,12 @@ layer {
   bottom: "bn_2b_branch2b_t"
   top: "conv2b_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -846,7 +1017,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -857,7 +1028,7 @@ layer {
   bottom: "bn_2b_branch2b_t"
   top: "sgp_2b_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -867,12 +1038,12 @@ layer {
   bottom: "sgp_2b_branch2b_t"
   top: "conv2b_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -890,7 +1061,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -915,21 +1086,21 @@ layer {
   bottom: "add_2b"
   top: "bn_2c_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -947,12 +1118,12 @@ layer {
   bottom: "bn_2c_branch2a_s"
   top: "conv2c_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 144
@@ -970,7 +1141,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -981,21 +1152,21 @@ layer {
   bottom: "conv2c_branch2a_s"
   top: "bn_2c_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1013,12 +1184,12 @@ layer {
   bottom: "bn_2c_branch2a_t"
   top: "conv2c_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -1036,7 +1207,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -1047,7 +1218,7 @@ layer {
   bottom: "bn_2c_branch2a_t"
   top: "sgp_2c_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -1057,12 +1228,12 @@ layer {
   bottom: "sgp_2c_branch2a_t"
   top: "conv2c_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -1080,7 +1251,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -1104,21 +1275,21 @@ layer {
   bottom: "add_2c_branch2a_t"
   top: "bn_2c_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1136,12 +1307,12 @@ layer {
   bottom: "bn_2c_branch2b_s"
   top: "conv2c_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 144
@@ -1159,7 +1330,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -1170,21 +1341,21 @@ layer {
   bottom: "conv2c_branch2b_s"
   top: "bn_2c_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1202,12 +1373,12 @@ layer {
   bottom: "bn_2c_branch2b_t"
   top: "conv2c_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -1225,7 +1396,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -1236,7 +1407,7 @@ layer {
   bottom: "bn_2c_branch2b_t"
   top: "sgp_2c_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -1246,12 +1417,12 @@ layer {
   bottom: "sgp_2c_branch2b_t"
   top: "conv2c_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 64
@@ -1269,7 +1440,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -1294,21 +1465,21 @@ layer {
   bottom: "add_2c"
   top: "bn_3a"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1326,12 +1497,12 @@ layer {
   bottom: "bn_3a"
   top: "conv3a_branch1_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 230
@@ -1349,7 +1520,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -1360,21 +1531,21 @@ layer {
   bottom: "conv3a_branch1_s"
   top: "bn_3a_branch1_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1392,12 +1563,12 @@ layer {
   bottom: "bn_3a_branch1_t"
   top: "conv3a_branch1_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -1415,7 +1586,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -1426,12 +1597,12 @@ layer {
   bottom: "bn_3a"
   top: "conv3a_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 230
@@ -1449,7 +1620,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -1460,21 +1631,21 @@ layer {
   bottom: "conv3a_branch2a_s"
   top: "bn_3a_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1492,12 +1663,12 @@ layer {
   bottom: "bn_3a_branch2a_t"
   top: "conv3a_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -1515,7 +1686,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -1526,7 +1697,7 @@ layer {
   bottom: "bn_3a_branch2a_t"
   top: "sgp_3a_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -1536,12 +1707,12 @@ layer {
   bottom: "sgp_3a_branch2a_t"
   top: "conv3a_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -1559,7 +1730,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -1583,21 +1754,21 @@ layer {
   bottom: "add_3a_branch2a_t"
   top: "bn_3a_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1615,12 +1786,12 @@ layer {
   bottom: "bn_3a_branch2b_s"
   top: "conv3a_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 288
@@ -1638,7 +1809,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -1649,21 +1820,21 @@ layer {
   bottom: "conv3a_branch2b_s"
   top: "bn_3a_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1681,12 +1852,12 @@ layer {
   bottom: "bn_3a_branch2b_t"
   top: "conv3a_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -1704,7 +1875,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -1715,7 +1886,7 @@ layer {
   bottom: "bn_3a_branch2b_t"
   top: "sgp_3a_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -1725,12 +1896,12 @@ layer {
   bottom: "sgp_3a_branch2b_t"
   top: "conv3a_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -1748,7 +1919,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -1773,21 +1944,21 @@ layer {
   bottom: "add_3a"
   top: "bn_3b_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1805,12 +1976,12 @@ layer {
   bottom: "bn_3b_branch2a_s"
   top: "conv3b_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 288
@@ -1828,7 +1999,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -1839,21 +2010,21 @@ layer {
   bottom: "conv3b_branch2a_s"
   top: "bn_3b_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1871,12 +2042,12 @@ layer {
   bottom: "bn_3b_branch2a_t"
   top: "conv3b_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -1894,7 +2065,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -1905,7 +2076,7 @@ layer {
   bottom: "bn_3b_branch2a_t"
   top: "sgp_3b_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -1915,12 +2086,12 @@ layer {
   bottom: "sgp_3b_branch2a_t"
   top: "conv3b_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -1938,7 +2109,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -1962,21 +2133,21 @@ layer {
   bottom: "add_3b_branch2a_t"
   top: "bn_3b_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -1994,12 +2165,12 @@ layer {
   bottom: "bn_3b_branch2b_s"
   top: "conv3b_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 288
@@ -2017,7 +2188,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -2028,21 +2199,21 @@ layer {
   bottom: "conv3b_branch2b_s"
   top: "bn_3b_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -2060,12 +2231,12 @@ layer {
   bottom: "bn_3b_branch2b_t"
   top: "conv3b_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -2083,7 +2254,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -2094,7 +2265,7 @@ layer {
   bottom: "bn_3b_branch2b_t"
   top: "sgp_3b_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -2104,12 +2275,12 @@ layer {
   bottom: "sgp_3b_branch2b_t"
   top: "conv3b_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -2127,7 +2298,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -2152,21 +2323,21 @@ layer {
   bottom: "add_3b"
   top: "bn_3c_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -2184,12 +2355,12 @@ layer {
   bottom: "bn_3c_branch2a_s"
   top: "conv3c_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 288
@@ -2207,7 +2378,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -2218,21 +2389,21 @@ layer {
   bottom: "conv3c_branch2a_s"
   top: "bn_3c_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -2250,12 +2421,12 @@ layer {
   bottom: "bn_3c_branch2a_t"
   top: "conv3c_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -2273,7 +2444,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -2284,7 +2455,7 @@ layer {
   bottom: "bn_3c_branch2a_t"
   top: "sgp_3c_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -2294,12 +2465,12 @@ layer {
   bottom: "sgp_3c_branch2a_t"
   top: "conv3c_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -2317,7 +2488,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -2341,21 +2512,21 @@ layer {
   bottom: "add_3c_branch2a_t"
   top: "bn_3c_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -2373,12 +2544,12 @@ layer {
   bottom: "bn_3c_branch2b_s"
   top: "conv3c_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 288
@@ -2396,7 +2567,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -2407,21 +2578,21 @@ layer {
   bottom: "conv3c_branch2b_s"
   top: "bn_3c_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -2439,12 +2610,12 @@ layer {
   bottom: "bn_3c_branch2b_t"
   top: "conv3c_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -2462,7 +2633,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -2473,7 +2644,7 @@ layer {
   bottom: "bn_3c_branch2b_t"
   top: "sgp_3c_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -2483,12 +2654,12 @@ layer {
   bottom: "sgp_3c_branch2b_t"
   top: "conv3c_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -2506,7 +2677,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -2531,21 +2702,21 @@ layer {
   bottom: "add_3c"
   top: "bn_3d_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -2563,12 +2734,12 @@ layer {
   bottom: "bn_3d_branch2a_s"
   top: "conv3d_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 288
@@ -2586,7 +2757,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -2597,21 +2768,21 @@ layer {
   bottom: "conv3d_branch2a_s"
   top: "bn_3d_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -2629,12 +2800,12 @@ layer {
   bottom: "bn_3d_branch2a_t"
   top: "conv3d_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -2652,7 +2823,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -2663,7 +2834,7 @@ layer {
   bottom: "bn_3d_branch2a_t"
   top: "sgp_3d_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -2673,12 +2844,12 @@ layer {
   bottom: "sgp_3d_branch2a_t"
   top: "conv3d_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -2696,7 +2867,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -2720,21 +2891,21 @@ layer {
   bottom: "add_3d_branch2a_t"
   top: "bn_3d_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -2752,12 +2923,12 @@ layer {
   bottom: "bn_3d_branch2b_s"
   top: "conv3d_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 288
@@ -2775,7 +2946,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -2786,21 +2957,21 @@ layer {
   bottom: "conv3d_branch2b_s"
   top: "bn_3d_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -2818,12 +2989,12 @@ layer {
   bottom: "bn_3d_branch2b_t"
   top: "conv3d_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -2841,7 +3012,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -2852,7 +3023,7 @@ layer {
   bottom: "bn_3d_branch2b_t"
   top: "sgp_3d_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -2862,12 +3033,12 @@ layer {
   bottom: "sgp_3d_branch2b_t"
   top: "conv3d_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 128
@@ -2885,7 +3056,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -2910,21 +3081,21 @@ layer {
   bottom: "add_3d"
   top: "bn_4a"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -2942,12 +3113,12 @@ layer {
   bottom: "bn_4a"
   top: "conv4a_branch1_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 460
@@ -2965,7 +3136,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -2976,21 +3147,21 @@ layer {
   bottom: "conv4a_branch1_s"
   top: "bn_4a_branch1_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3008,12 +3179,12 @@ layer {
   bottom: "bn_4a_branch1_t"
   top: "conv4a_branch1_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3031,7 +3202,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -3042,12 +3213,12 @@ layer {
   bottom: "bn_4a"
   top: "conv4a_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 460
@@ -3065,7 +3236,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -3076,21 +3247,21 @@ layer {
   bottom: "conv4a_branch2a_s"
   top: "bn_4a_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3108,12 +3279,12 @@ layer {
   bottom: "bn_4a_branch2a_t"
   top: "conv4a_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3131,7 +3302,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -3142,7 +3313,7 @@ layer {
   bottom: "bn_4a_branch2a_t"
   top: "sgp_4a_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -3152,12 +3323,12 @@ layer {
   bottom: "sgp_4a_branch2a_t"
   top: "conv4a_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3175,7 +3346,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -3199,21 +3370,21 @@ layer {
   bottom: "add_4a_branch2a_t"
   top: "bn_4a_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3231,12 +3402,12 @@ layer {
   bottom: "bn_4a_branch2b_s"
   top: "conv4a_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -3254,7 +3425,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -3265,21 +3436,21 @@ layer {
   bottom: "conv4a_branch2b_s"
   top: "bn_4a_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3297,12 +3468,12 @@ layer {
   bottom: "bn_4a_branch2b_t"
   top: "conv4a_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3320,7 +3491,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -3331,7 +3502,7 @@ layer {
   bottom: "bn_4a_branch2b_t"
   top: "sgp_4a_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -3341,12 +3512,12 @@ layer {
   bottom: "sgp_4a_branch2b_t"
   top: "conv4a_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3364,7 +3535,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -3389,21 +3560,21 @@ layer {
   bottom: "add_4a"
   top: "bn_4b_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3421,12 +3592,12 @@ layer {
   bottom: "bn_4b_branch2a_s"
   top: "conv4b_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -3444,7 +3615,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -3455,21 +3626,21 @@ layer {
   bottom: "conv4b_branch2a_s"
   top: "bn_4b_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3487,12 +3658,12 @@ layer {
   bottom: "bn_4b_branch2a_t"
   top: "conv4b_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3510,7 +3681,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -3521,7 +3692,7 @@ layer {
   bottom: "bn_4b_branch2a_t"
   top: "sgp_4b_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -3531,12 +3702,12 @@ layer {
   bottom: "sgp_4b_branch2a_t"
   top: "conv4b_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3554,7 +3725,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -3578,21 +3749,21 @@ layer {
   bottom: "add_4b_branch2a_t"
   top: "bn_4b_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3610,12 +3781,12 @@ layer {
   bottom: "bn_4b_branch2b_s"
   top: "conv4b_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -3633,7 +3804,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -3644,21 +3815,21 @@ layer {
   bottom: "conv4b_branch2b_s"
   top: "bn_4b_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3676,12 +3847,12 @@ layer {
   bottom: "bn_4b_branch2b_t"
   top: "conv4b_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3699,7 +3870,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -3710,7 +3881,7 @@ layer {
   bottom: "bn_4b_branch2b_t"
   top: "sgp_4b_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -3720,12 +3891,12 @@ layer {
   bottom: "sgp_4b_branch2b_t"
   top: "conv4b_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3743,7 +3914,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -3768,21 +3939,21 @@ layer {
   bottom: "add_4b"
   top: "bn_4c_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3800,12 +3971,12 @@ layer {
   bottom: "bn_4c_branch2a_s"
   top: "conv4c_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -3823,7 +3994,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -3834,21 +4005,21 @@ layer {
   bottom: "conv4c_branch2a_s"
   top: "bn_4c_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3866,12 +4037,12 @@ layer {
   bottom: "bn_4c_branch2a_t"
   top: "conv4c_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3889,7 +4060,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -3900,7 +4071,7 @@ layer {
   bottom: "bn_4c_branch2a_t"
   top: "sgp_4c_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -3910,12 +4081,12 @@ layer {
   bottom: "sgp_4c_branch2a_t"
   top: "conv4c_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -3933,7 +4104,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -3957,21 +4128,21 @@ layer {
   bottom: "add_4c_branch2a_t"
   top: "bn_4c_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -3989,12 +4160,12 @@ layer {
   bottom: "bn_4c_branch2b_s"
   top: "conv4c_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -4012,7 +4183,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -4023,21 +4194,21 @@ layer {
   bottom: "conv4c_branch2b_s"
   top: "bn_4c_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -4055,12 +4226,12 @@ layer {
   bottom: "bn_4c_branch2b_t"
   top: "conv4c_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -4078,7 +4249,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -4089,7 +4260,7 @@ layer {
   bottom: "bn_4c_branch2b_t"
   top: "sgp_4c_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -4099,12 +4270,12 @@ layer {
   bottom: "sgp_4c_branch2b_t"
   top: "conv4c_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -4122,7 +4293,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -4147,21 +4318,21 @@ layer {
   bottom: "add_4c"
   top: "bn_4d_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -4179,12 +4350,12 @@ layer {
   bottom: "bn_4d_branch2a_s"
   top: "conv4d_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -4202,7 +4373,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -4213,21 +4384,21 @@ layer {
   bottom: "conv4d_branch2a_s"
   top: "bn_4d_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -4245,12 +4416,12 @@ layer {
   bottom: "bn_4d_branch2a_t"
   top: "conv4d_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -4268,7 +4439,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -4279,7 +4450,7 @@ layer {
   bottom: "bn_4d_branch2a_t"
   top: "sgp_4d_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -4289,12 +4460,12 @@ layer {
   bottom: "sgp_4d_branch2a_t"
   top: "conv4d_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -4312,7 +4483,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -4336,21 +4507,21 @@ layer {
   bottom: "add_4d_branch2a_t"
   top: "bn_4d_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -4368,12 +4539,12 @@ layer {
   bottom: "bn_4d_branch2b_s"
   top: "conv4d_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -4391,7 +4562,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -4402,21 +4573,21 @@ layer {
   bottom: "conv4d_branch2b_s"
   top: "bn_4d_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -4434,12 +4605,12 @@ layer {
   bottom: "bn_4d_branch2b_t"
   top: "conv4d_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -4457,7 +4628,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -4468,7 +4639,7 @@ layer {
   bottom: "bn_4d_branch2b_t"
   top: "sgp_4d_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -4478,12 +4649,12 @@ layer {
   bottom: "sgp_4d_branch2b_t"
   top: "conv4d_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -4501,7 +4672,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -4526,21 +4697,21 @@ layer {
   bottom: "add_4d"
   top: "bn_4e_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -4558,12 +4729,12 @@ layer {
   bottom: "bn_4e_branch2a_s"
   top: "conv4e_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -4581,7 +4752,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -4592,21 +4763,21 @@ layer {
   bottom: "conv4e_branch2a_s"
   top: "bn_4e_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -4624,12 +4795,12 @@ layer {
   bottom: "bn_4e_branch2a_t"
   top: "conv4e_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -4647,7 +4818,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -4658,7 +4829,7 @@ layer {
   bottom: "bn_4e_branch2a_t"
   top: "sgp_4e_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -4668,12 +4839,12 @@ layer {
   bottom: "sgp_4e_branch2a_t"
   top: "conv4e_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -4691,7 +4862,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -4715,21 +4886,21 @@ layer {
   bottom: "add_4e_branch2a_t"
   top: "bn_4e_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -4747,12 +4918,12 @@ layer {
   bottom: "bn_4e_branch2b_s"
   top: "conv4e_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -4770,7 +4941,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -4781,21 +4952,21 @@ layer {
   bottom: "conv4e_branch2b_s"
   top: "bn_4e_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -4813,12 +4984,12 @@ layer {
   bottom: "bn_4e_branch2b_t"
   top: "conv4e_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -4836,7 +5007,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -4847,7 +5018,7 @@ layer {
   bottom: "bn_4e_branch2b_t"
   top: "sgp_4e_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -4857,12 +5028,12 @@ layer {
   bottom: "sgp_4e_branch2b_t"
   top: "conv4e_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -4880,7 +5051,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -4905,21 +5076,21 @@ layer {
   bottom: "add_4e"
   top: "bn_4f_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -4937,12 +5108,12 @@ layer {
   bottom: "bn_4f_branch2a_s"
   top: "conv4f_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -4960,7 +5131,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -4971,21 +5142,21 @@ layer {
   bottom: "conv4f_branch2a_s"
   top: "bn_4f_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5003,12 +5174,12 @@ layer {
   bottom: "bn_4f_branch2a_t"
   top: "conv4f_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -5026,7 +5197,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -5037,7 +5208,7 @@ layer {
   bottom: "bn_4f_branch2a_t"
   top: "sgp_4f_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -5047,12 +5218,12 @@ layer {
   bottom: "sgp_4f_branch2a_t"
   top: "conv4f_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -5070,7 +5241,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -5094,21 +5265,21 @@ layer {
   bottom: "add_4f_branch2a_t"
   top: "bn_4f_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5126,12 +5297,12 @@ layer {
   bottom: "bn_4f_branch2b_s"
   top: "conv4f_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 576
@@ -5149,7 +5320,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -5160,21 +5331,21 @@ layer {
   bottom: "conv4f_branch2b_s"
   top: "bn_4f_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5192,12 +5363,12 @@ layer {
   bottom: "bn_4f_branch2b_t"
   top: "conv4f_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -5215,7 +5386,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -5226,7 +5397,7 @@ layer {
   bottom: "bn_4f_branch2b_t"
   top: "sgp_4f_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -5236,12 +5407,12 @@ layer {
   bottom: "sgp_4f_branch2b_t"
   top: "conv4f_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 256
@@ -5259,7 +5430,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -5284,21 +5455,21 @@ layer {
   bottom: "add_4f"
   top: "bn_5a"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5316,12 +5487,12 @@ layer {
   bottom: "bn_5a"
   top: "conv5a_branch1_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 921
@@ -5339,7 +5510,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -5350,21 +5521,21 @@ layer {
   bottom: "conv5a_branch1_s"
   top: "bn_5a_branch1_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5382,12 +5553,12 @@ layer {
   bottom: "bn_5a_branch1_t"
   top: "conv5a_branch1_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -5405,7 +5576,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -5416,12 +5587,12 @@ layer {
   bottom: "bn_5a"
   top: "conv5a_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 921
@@ -5439,7 +5610,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -5450,21 +5621,21 @@ layer {
   bottom: "conv5a_branch2a_s"
   top: "bn_5a_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5482,12 +5653,12 @@ layer {
   bottom: "bn_5a_branch2a_t"
   top: "conv5a_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -5505,7 +5676,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -5516,7 +5687,7 @@ layer {
   bottom: "bn_5a_branch2a_t"
   top: "sgp_5a_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -5526,12 +5697,12 @@ layer {
   bottom: "sgp_5a_branch2a_t"
   top: "conv5a_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -5549,7 +5720,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -5573,21 +5744,21 @@ layer {
   bottom: "add_5a_branch2a_t"
   top: "bn_5a_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5605,12 +5776,12 @@ layer {
   bottom: "bn_5a_branch2b_s"
   top: "conv5a_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 1152
@@ -5628,7 +5799,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -5639,21 +5810,21 @@ layer {
   bottom: "conv5a_branch2b_s"
   top: "bn_5a_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5671,12 +5842,12 @@ layer {
   bottom: "bn_5a_branch2b_t"
   top: "conv5a_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -5694,7 +5865,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -5705,7 +5876,7 @@ layer {
   bottom: "bn_5a_branch2b_t"
   top: "sgp_5a_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -5715,12 +5886,12 @@ layer {
   bottom: "sgp_5a_branch2b_t"
   top: "conv5a_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -5738,7 +5909,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -5763,21 +5934,21 @@ layer {
   bottom: "add_5a"
   top: "bn_5b_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5795,12 +5966,12 @@ layer {
   bottom: "bn_5b_branch2a_s"
   top: "conv5b_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 1152
@@ -5818,7 +5989,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -5829,21 +6000,21 @@ layer {
   bottom: "conv5b_branch2a_s"
   top: "bn_5b_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5861,12 +6032,12 @@ layer {
   bottom: "bn_5b_branch2a_t"
   top: "conv5b_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -5884,7 +6055,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -5895,7 +6066,7 @@ layer {
   bottom: "bn_5b_branch2a_t"
   top: "sgp_5b_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -5905,12 +6076,12 @@ layer {
   bottom: "sgp_5b_branch2a_t"
   top: "conv5b_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -5928,7 +6099,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -5952,21 +6123,21 @@ layer {
   bottom: "add_5b_branch2a_t"
   top: "bn_5b_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -5984,12 +6155,12 @@ layer {
   bottom: "bn_5b_branch2b_s"
   top: "conv5b_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 1152
@@ -6007,7 +6178,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -6018,21 +6189,21 @@ layer {
   bottom: "conv5b_branch2b_s"
   top: "bn_5b_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -6050,12 +6221,12 @@ layer {
   bottom: "bn_5b_branch2b_t"
   top: "conv5b_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -6073,7 +6244,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -6084,7 +6255,7 @@ layer {
   bottom: "bn_5b_branch2b_t"
   top: "sgp_5b_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -6094,12 +6265,12 @@ layer {
   bottom: "sgp_5b_branch2b_t"
   top: "conv5b_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -6117,7 +6288,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -6142,21 +6313,21 @@ layer {
   bottom: "add_5b"
   top: "bn_5c_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -6174,12 +6345,12 @@ layer {
   bottom: "bn_5c_branch2a_s"
   top: "conv5c_branch2a_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 1152
@@ -6197,7 +6368,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -6208,21 +6379,21 @@ layer {
   bottom: "conv5c_branch2a_s"
   top: "bn_5c_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -6240,12 +6411,12 @@ layer {
   bottom: "bn_5c_branch2a_t"
   top: "conv5c_branch2a_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -6263,7 +6434,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -6274,7 +6445,7 @@ layer {
   bottom: "bn_5c_branch2a_t"
   top: "sgp_5c_branch2a_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -6284,12 +6455,12 @@ layer {
   bottom: "sgp_5c_branch2a_t"
   top: "conv5c_branch2a_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -6307,7 +6478,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -6331,21 +6502,21 @@ layer {
   bottom: "add_5c_branch2a_t"
   top: "bn_5c_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -6363,12 +6534,12 @@ layer {
   bottom: "bn_5c_branch2b_s"
   top: "conv5c_branch2b_s"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 1152
@@ -6386,7 +6557,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: CUDNN
   }
@@ -6397,21 +6568,21 @@ layer {
   bottom: "conv5c_branch2b_s"
   top: "bn_5c_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -6429,12 +6600,12 @@ layer {
   bottom: "bn_5c_branch2b_t"
   top: "conv5c_branch2b_t"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -6452,7 +6623,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -6463,7 +6634,7 @@ layer {
   bottom: "bn_5c_branch2b_t"
   top: "sgp_5c_branch2b_t"
   pooling_param {
-    pool: AVE
+    pool: MAX
     spatial_global_pooling: true
   }
 }
@@ -6473,12 +6644,12 @@ layer {
   bottom: "sgp_5c_branch2b_t"
   top: "conv5c_branch2b_t_atten"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   convolution_param {
     num_output: 512
@@ -6496,7 +6667,7 @@ layer {
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     engine: DEFAULT
   }
@@ -6521,21 +6692,21 @@ layer {
   bottom: "add_5c"
   top: "bn_5b"
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   param {
-    lr_mult: 1
-    decay_mult: 0
+    lr_mult: 1.0
+    decay_mult: 0.0
   }
   bn_param {
     slope_filler {
       type: "constant"
-      value: 1
+      value: 1.0
     }
     bias_filler {
       type: "constant"
-      value: 0
+      value: 0.0
     }
     frozen: false
     engine: CUDNN
@@ -6575,7 +6746,7 @@ layer {
   bottom: "pool5_reshape"
   top: "pool5_reshape"
   dropout_param {
-    dropout_ratio: 0.2
+    dropout_ratio: 0.20000000298
   }
 }
 layer {
@@ -6584,12 +6755,12 @@ layer {
   bottom: "pool5_reshape"
   top: "fc400"
   param {
-    lr_mult: 1
-    decay_mult: 1
+    lr_mult: 1.0
+    decay_mult: 1.0
   }
   param {
-    lr_mult: 2
-    decay_mult: 0
+    lr_mult: 2.0
+    decay_mult: 0.0
   }
   inner_product_param {
     num_output: 400

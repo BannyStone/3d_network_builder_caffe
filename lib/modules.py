@@ -193,7 +193,7 @@ class SgpAttenModule(BaseModule):
                                 pad=[1, 0, 0], \
                                 stride=[stride, 1, 1])
         self.poolingParams = dict(name='sgp_'+name_template, \
-                                pool=P.Pooling.AVE, \
+                                pool=P.Pooling.MAX, \
                                 spatial_global_pooling=True)
         self.sigmoidParams = dict(name='sigmoid_'+name_template)
         ## axpxpy params ##
