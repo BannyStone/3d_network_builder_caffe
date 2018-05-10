@@ -168,7 +168,7 @@ class TemporalConvModule(BaseModule):
 
 class SgpAttenModule(BaseModule):
     type='SgpAtten'
-    def __init__(self, name_template, bn_params, stride, num_output, sync_bn=False, uni_bn=True, scale_params=None):
+    def __init__(self, name_template, bn_params, stride, num_output, t_conv=False, sync_bn=False, uni_bn=True, scale_params=None):
         self.uni_bn = uni_bn
         self.sync_bn = sync_bn
         self.stride = stride
@@ -182,10 +182,10 @@ class SgpAttenModule(BaseModule):
             self.batchNormParams = bn_params.copy()
             self.scaleParams = scale_params.copy()
         self.reluParams = dict(name=name_template + '_relu')
-        self.conv1x1x1Params = dict(name='conv'+name_template, \
+        self.convtx1x1Params = dict(name='conv'+name_template, \
                                     num_output=num_output, \
-                                    kernel_size=[1, 1, 1], \
-                                    pad=[0, 0, 0], \
+                                    kernel_size=[3, 1, 1] if t_conv else [1, 1, 1], \
+                                    pad=[1, 0, 0] if t_conv else [0, 0, 0], \
                                     stride=[stride, 1, 1])
         self.t_convParams = dict(name='conv'+name_template+'_atten', \
                                 num_output=num_output, \
@@ -197,9 +197,12 @@ class SgpAttenModule(BaseModule):
                                 spatial_global_pooling=True)
         self.sigmoidParams = dict(name='sigmoid_'+name_template)
         ## axpxpy params ##
-        self.addParams = dict(name='add_'+name_template[:2])
+        if 'b_t' not in name_template:
+            self.addParams = dict(name='add_'+name_template)
+        else:
+            self.addParams = dict(name='add_'+name_template[:2])
 
-    def attach(self, netspec, bottom, residual_branch):
+    def attach(self, netspec, bottom, residual_branch=None):
 
         ######## Pre Norm ########
         prenorm = BNReLUModule(name_template=self.name_template, \
@@ -207,7 +210,7 @@ class SgpAttenModule(BaseModule):
                                 sync_bn=self.sync_bn).attach(netspec, bottom)
 
         ######## 1x1x1 Shortcut ########
-        shortcut = BaseModule('Convolution', self.conv1x1x1Params).attach(netspec, [prenorm])
+        shortcut = BaseModule('Convolution', self.convtx1x1Params).attach(netspec, [prenorm])
 
         ######## Main Branch ########
 
@@ -221,7 +224,10 @@ class SgpAttenModule(BaseModule):
         sigmoid = BaseModule('Sigmoid', self.sigmoidParams).attach(netspec, [t_conv])
 
         ######## add ########
-        out = BaseModule('Axpxpy', self.addParams).attach(netspec, [sigmoid, shortcut, residual_branch])
+        if residual_branch == None:
+            out = BaseModule('Axpx', self.addParams).attach(netspec, [sigmoid, shortcut])
+        else:
+            out = BaseModule('Axpxpy', self.addParams).attach(netspec, [sigmoid, shortcut, residual_branch])
 
         return out
 
